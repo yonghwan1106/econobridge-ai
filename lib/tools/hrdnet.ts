@@ -5,8 +5,9 @@ import {
   findRegionCode,
 } from "@/lib/constants/region-codes";
 
+/** 고용24 HRD-Net 훈련과정 API (구 hrd.go.kr) */
 const HRDNET_BASE_URL =
-  "https://www.hrd.go.kr/hrdp/api/prgapi/selectProgramList.do";
+  "https://www.work24.go.kr/cm/openApi/call/hr/callOpenApiSvcInfo310L01.do";
 
 export const searchTrainingCourses = tool({
   description:

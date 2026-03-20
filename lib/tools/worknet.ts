@@ -6,7 +6,9 @@ import {
   findRegionCode,
 } from "@/lib/constants/region-codes";
 
-const WORK24_BASE_URL = "http://openapi.work.go.kr/opi/opi/opia/wantedApi.do";
+/** 고용24 채용정보 API (구 워크넷) */
+const WORK24_BASE_URL =
+  "https://www.work24.go.kr/cm/openApi/call/wk/callOpenApiSvcInfo210L01.do";
 
 export const searchWorknetJobs = tool({
   description:
@@ -51,7 +53,13 @@ export const searchWorknetJobs = tool({
       const text = await resp.text();
       const data = await parseStringPromise(text, { explicitArray: false });
 
-      const root = data?.wantedRoot ?? {};
+      // 고용24 에러 응답 처리 (<GO24><error>...</error></GO24>)
+      if (data?.GO24?.error) {
+        return mockWorknetResponse(keyword, region, data.GO24.error);
+      }
+
+      // 고용24 응답 또는 구 워크넷 응답 호환
+      const root = data?.wantedRoot ?? data?.GO24?.wantedRoot ?? data?.GO24 ?? {};
       let wanted = root?.wanted ?? [];
       if (!Array.isArray(wanted)) wanted = [wanted];
 

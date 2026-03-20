@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EconoBridge AI — 아이디어 제안서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;800;900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════════════════════════════════
+       DESIGN DIRECTION: Editorial Industrial
+       Tone: Authoritative magazine + industrial safety utility
+       Palette: Deep navy/slate + electric cyan accent + warm amber warning
+       Typography: DM Serif Display (display) + Noto Sans KR (body) + JetBrains Mono (code)
+       ══════════════════════════════════════════════════════════════ */
+
+    :root {
+      --ink: #0c1222;
+      --ink-80: #1a2540;
+      --ink-60: #2d3a56;
+      --ink-40: #4a5578;
+      --ink-20: #7a8299;
+      --paper: #f7f6f3;
+      --paper-warm: #f0ede7;
+      --paper-cool: #eef1f5;
+      --cyan: #00d4aa;
+      --cyan-dim: rgba(0,212,170,.12);
+      --cyan-glow: rgba(0,212,170,.35);
+      --amber: #ff8c42;
+      --amber-dim: rgba(255,140,66,.1);
+      --red: #e63946;
+      --red-dim: rgba(230,57,70,.08);
+      --green: #2ec4b6;
+      --green-dim: rgba(46,196,182,.1);
+      --yellow: #f4d35e;
+      --display: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+      --body: 'Noto Sans KR', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'Consolas', monospace;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.85;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Noise Texture Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Page Wrapper ── */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      body { background: #fff; }
+      body::before { display: none; }
+      .cover { min-height: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .page-break { page-break-before: always; }
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       COVER — Dark hero with diagonal slashes
+       ══════════════════════════════════════════════════════════════ */
+    .cover {
+      min-height: 100vh;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal slashes — industrial motif */
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 70%;
+      height: 160%;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 38px,
+        rgba(0,212,170,.06) 38px,
+        rgba(0,212,170,.06) 40px
+      );
+      pointer-events: none;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--amber), var(--cyan));
+    }
+
+    .cover-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+      animation: fadeSlideUp .8s var(--ease-out-expo) both;
+      animation-delay: .1s;
+    }
+
+    .cover h1 {
+      font-family: var(--display);
+      font-size: clamp(36px, 5.5vw, 56px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      animation: fadeSlideUp .8s var(--ease-out-expo) both;
+      animation-delay: .25s;
+    }
+
+    .cover h1 .brand {
+      color: var(--cyan);
+      font-style: italic;
+    }
+
+    .cover .cover-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,.55);
+      font-weight: 300;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+      position: relative;
+      z-index: 1;
+      animation: fadeSlideUp .8s var(--ease-out-expo) both;
+      animation-delay: .4s;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 1px;
+      position: relative;
+      z-index: 1;
+      animation: fadeSlideUp .8s var(--ease-out-expo) both;
+      animation-delay: .55s;
+    }
+
+    .cover-meta-item {
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(8px);
+      padding: 20px 28px;
+      flex: 1;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .cover-meta-item:first-child { border-radius: 12px 0 0 12px; }
+    .cover-meta-item:last-child { border-radius: 0 12px 12px 0; }
+
+    .cover-meta-item .cm-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .cover-meta-item .cm-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,.8);
+    }
+
+    /* Large decorative number */
+    .cover-deco {
+      position: absolute;
+      top: 48px;
+      right: 56px;
+      font-family: var(--display);
+      font-size: 180px;
+      font-weight: 700;
+      color: rgba(255,255,255,.03);
+      line-height: 1;
+      z-index: 0;
+      animation: fadeIn 1.5s var(--ease-out-expo) both;
+      animation-delay: .6s;
+    }
+
+    /* Shield icon */
+    .cover-shield {
+      position: absolute;
+      top: 56px;
+      left: 64px;
+      font-size: 42px;
+      opacity: .6;
+      z-index: 1;
+      animation: fadeIn 1s var(--ease-out-expo) both;
+      animation-delay: .3s;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       CONTENT SECTION
+       ══════════════════════════════════════════════════════════════ */
+    .content {
+      background: var(--paper);
+      padding: 56px 64px;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .content { padding: 36px 24px; }
+      .cover { padding: 40px 28px; }
+      .cover-meta { flex-direction: column; }
+      .cover-meta-item:first-child,
+      .cover-meta-item:last-child { border-radius: 0; }
+    }
+
+    /* ── Section Header — asymmetric with oversized number ── */
+    .sec {
+      margin: 64px 0 32px;
+      position: relative;
+      padding-left: 72px;
+    }
+
+    .sec:first-child { margin-top: 0; }
+
+    .sec-num {
+      position: absolute;
+      left: 0;
+      top: -8px;
+      font-family: var(--display);
+      font-size: 64px;
+      font-weight: 700;
+      color: var(--cyan);
+      opacity: .2;
+      line-height: 1;
+    }
+
+    .sec-title {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .sec-rule {
+      width: 48px;
+      height: 3px;
+      background: var(--cyan);
+      margin-top: 12px;
+      border-radius: 2px;
+    }
+
+    /* ── Sub-section ── */
+    h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 36px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-60);
+      margin: 24px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: var(--ink-40);
+      text-align: justify;
+      word-break: keep-all;
+    }
+
+    strong { color: var(--ink); font-weight: 700; }
+
+    /* ── Team Table ── */
+    .team-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      border: 2px solid var(--ink);
+    }
+
+    .team-tbl th {
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 12px 18px;
+      text-align: left;
+    }
+
+    .team-tbl td {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      font-size: 14px;
+    }
+
+    .team-tbl td:first-child {
+      font-weight: 800;
+      width: 90px;
+      color: var(--ink);
+      background: var(--paper-cool);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      font-family: var(--mono);
+    }
+
+    /* ── Callout ── */
+    .callout {
+      position: relative;
+      padding: 22px 24px 22px 56px;
+      border-radius: 2px;
+      margin: 20px 0;
+    }
+
+    .callout::before {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font-size: 20px;
+    }
+
+    .callout p { margin: 0; }
+
+    .callout.cyan {
+      background: var(--cyan-dim);
+      border-left: 4px solid var(--cyan);
+    }
+    .callout.cyan::before { content: '💡'; }
+
+    .callout.amber {
+      background: var(--amber-dim);
+      border-left: 4px solid var(--amber);
+    }
+    .callout.amber::before { content: '⚠️'; }
+
+    .callout.green {
+      background: var(--green-dim);
+      border-left: 4px solid var(--green);
+    }
+    .callout.green::before { content: '♿'; }
+
+    /* ── Step list ── */
+    .steps {
+      list-style: none;
+      margin: 16px 0 24px;
+      counter-reset: step;
+    }
+
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,.04);
+    }
+
+    .steps li:last-child { border-bottom: none; }
+
+    .steps li::before {
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      background: var(--ink);
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .steps li .s-title {
+      font-weight: 800;
+      color: var(--ink);
+      display: block;
+      font-size: 14px;
+    }
+
+    .steps li .s-desc {
+      font-size: 14px;
+      color: var(--ink-40);
+    }
+
+    /* ── Bullet list ── */
+    ul.bl {
+      list-style: none;
+      margin: 10px 0 18px;
+    }
+
+    ul.bl li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--ink-40);
+    }
+
+    ul.bl li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       DATA TABLE — Industrial style
+       ══════════════════════════════════════════════════════════════ */
+    .dtbl {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 14px;
+      border: 2px solid var(--ink);
+    }
+
+    .dtbl thead th {
+      background: var(--ink);
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-weight: 600;
+      padding: 11px 16px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .dtbl tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      vertical-align: top;
+      color: var(--ink-40);
+    }
+
+    .dtbl tbody tr:nth-child(even) { background: rgba(0,0,0,.015); }
+    .dtbl tbody tr:hover { background: var(--cyan-dim); }
+
+    .dtbl code {
+      font-family: var(--mono);
+      background: var(--ink);
+      color: var(--cyan);
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .dtbl .hl {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       ARCHITECTURE — Blueprint style
+       ══════════════════════════════════════════════════════════════ */
+    .blueprint {
+      background: var(--ink);
+      border-radius: 2px;
+      padding: 36px;
+      margin: 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid lines */
+    .blueprint::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,170,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,170,.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .bp-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bp-node {
+      padding: 18px 28px;
+      border-radius: 2px;
+      text-align: center;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .bp-node.user {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.7);
+    }
+
+    .bp-node.agent {
+      background: rgba(0,212,170,.08);
+      border: 2px solid var(--cyan);
+      color: #fff;
+      box-shadow: 0 0 40px rgba(0,212,170,.1);
+    }
+
+    .bp-node.result {
+      background: rgba(255,140,66,.08);
+      border: 1px solid var(--amber);
+      color: rgba(255,255,255,.8);
+    }
+
+    .bp-node .n-title {
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .bp-node .n-sub {
+      font-size: 12px;
+      opacity: .6;
+    }
+
+    .bp-arrow {
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      opacity: .5;
+    }
+
+    .bp-chips {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bp-chip {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,170,.3);
+      padding: 4px 12px;
+      border-radius: 2px;
+      letter-spacing: .5px;
+    }
+
+    .bp-tools {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .bp-tool {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 2px;
+      padding: 14px 8px;
+      text-align: center;
+      transition: border-color .2s;
+    }
+
+    .bp-tool:hover { border-color: var(--cyan); }
+
+    .bp-tool .t-icon { font-size: 22px; margin-bottom: 6px; }
+    .bp-tool .t-name { font-size: 12px; font-weight: 700; color: #fff; }
+    .bp-tool .t-src { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 2px; }
+
+    /* ── Tech Stack Badges ── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 16px 0 8px;
+    }
+
+    .tech {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      padding: 5px 12px;
+      border-radius: 2px;
+      background: var(--ink);
+      color: var(--cyan);
+      border: 1px solid var(--ink-60);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       FORMULA — Code editor style
+       ══════════════════════════════════════════════════════════════ */
+    .code-block {
+      background: #0d1117;
+      border-radius: 2px;
+      margin: 20px 0;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    }
+
+    .code-header {
+      background: #161b22;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .code-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .code-dot.r { background: #ff5f57; }
+    .code-dot.y { background: #febc2e; }
+    .code-dot.g { background: #28c840; }
+
+    .code-filename {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255,255,255,.4);
+      margin-left: 8px;
+    }
+
+    .code-body {
+      padding: 24px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 2.2;
+      color: #e6edf3;
+    }
+
+    .code-body .c-green { color: #7ee787; }
+    .code-body .c-red { color: #ff7b72; }
+    .code-body .c-comment { color: #484f58; }
+    .code-body .c-cyan { color: var(--cyan); }
+
+    /* ── Grade Cards ── */
+    .grades {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .grade {
+      padding: 22px 14px;
+      text-align: center;
+      border-radius: 2px;
+      transition: transform .15s;
+    }
+
+    .grade:hover { transform: translateY(-4px); }
+
+    .grade .g-letter {
+      font-family: var(--display);
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .grade .g-range {
+      font-family: var(--mono);
+      font-size: 11px;
+      opacity: .65;
+    }
+
+    .grade .g-label { font-size: 14px; font-weight: 700; margin-top: 6px; }
+
+    .grade.ga { background: #0d3331; color: var(--green); border: 1px solid rgba(46,196,182,.25); }
+    .grade.gb { background: #33290d; color: var(--yellow); border: 1px solid rgba(244,211,94,.2); }
+    .grade.gc { background: #331e0d; color: var(--amber); border: 1px solid rgba(255,140,66,.2); }
+    .grade.gd { background: #330d11; color: var(--red); border: 1px solid rgba(230,57,70,.2); }
+
+    /* ══════════════════════════════════════════════════════════════
+       WORKFLOW — Timeline
+       ══════════════════════════════════════════════════════════════ */
+    .workflow {
+      background: var(--paper-cool);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 2px;
+      padding: 28px;
+      margin: 20px 0;
+    }
+
+    .wf-input {
+      background: var(--ink);
+      color: rgba(255,255,255,.85);
+      border-radius: 2px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .wf-avatar {
+      width: 28px;
+      height: 28px;
+      background: var(--cyan);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .wf-timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .wf-timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--cyan), var(--amber));
+    }
+
+    .wf-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 8px 0;
+      position: relative;
+    }
+
+    .wf-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--cyan);
+      border-radius: 1px;
+      flex-shrink: 0;
+      margin-left: -22px;
+      margin-top: 7px;
+      transform: rotate(45deg);
+    }
+
+    .wf-step:last-child .wf-dot { background: var(--amber); }
+
+    .wf-lbl {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-20);
+      font-weight: 700;
+      min-width: 52px;
+      letter-spacing: .5px;
+      padding-top: 3px;
+    }
+
+    .wf-txt {
+      font-size: 14px;
+      color: var(--ink-40);
+    }
+
+    .wf-txt strong { color: var(--ink); }
+
+    /* ══════════════════════════════════════════════════════════════
+       SCENARIO CARDS
+       ══════════════════════════════════════════════════════════════ */
+    .scenario {
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 2px;
+      margin: 16px 0;
+      overflow: hidden;
+      background: #fff;
+      transition: box-shadow .2s;
+    }
+
+    .scenario:hover { box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+
+    .scenario-head {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(0,0,0,.04);
+      background: var(--paper-cool);
+    }
+
+    .scenario-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .scenario-icon.sa { background: var(--cyan-dim); }
+    .scenario-icon.sb { background: var(--amber-dim); }
+    .scenario-icon.sc { background: var(--red-dim); }
+
+    .scenario-name {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .scenario-body {
+      padding: 20px 24px;
+    }
+
+    .scenario-query {
+      background: var(--ink);
+      color: rgba(255,255,255,.7);
+      border-radius: 2px;
+      padding: 10px 16px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      font-family: var(--mono);
+    }
+
+    .scenario-query::before {
+      content: '> ';
+      color: var(--cyan);
+    }
+
+    .scenario ul {
+      list-style: none;
+    }
+
+    .scenario ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: var(--ink-40);
+    }
+
+    .scenario ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-weight: 700;
+    }
+
+    .scenario ul li code {
+      font-family: var(--mono);
+      background: var(--ink);
+      color: var(--cyan);
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-size: 11px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       EFFECTS GRID
+       ══════════════════════════════════════════════════════════════ */
+    .fx-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .fx-grid,
+      .grades,
+      .feas-grid,
+      .bp-tools { grid-template-columns: 1fr; }
+    }
+
+    .fx-card {
+      padding: 22px;
+      border-radius: 2px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.05);
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .fx-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.06); }
+
+    .fx-card .fx-icon { font-size: 28px; margin-bottom: 10px; }
+    .fx-card .fx-title { font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--ink); }
+    .fx-card .fx-desc { font-size: 13px; color: var(--ink-20); line-height: 1.65; }
+
+    /* ── Linkage Box ── */
+    .link-box {
+      background: var(--green-dim);
+      border: 1px solid rgba(46,196,182,.15);
+      border-radius: 2px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .link-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(46,196,182,.1);
+    }
+
+    .link-item:last-child { border-bottom: none; }
+
+    .link-num {
+      width: 28px;
+      height: 28px;
+      background: var(--green);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .link-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--ink); }
+
+    .link-content ul { list-style: none; }
+    .link-content ul li {
+      font-size: 13px;
+      color: var(--ink-40);
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 2px;
+    }
+    .link-content ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ── Feasibility Grid ── */
+    .feas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .feas-card {
+      text-align: center;
+      padding: 24px 14px;
+      border-radius: 2px;
+      background: var(--ink);
+      color: #fff;
+      transition: transform .15s;
+    }
+
+    .feas-card:hover { transform: translateY(-3px); }
+
+    .feas-card .f-icon { font-size: 32px; margin-bottom: 10px; }
+    .feas-card .f-title { font-weight: 800; font-size: 13px; color: var(--cyan); margin-bottom: 4px; }
+    .feas-card .f-desc { font-size: 11px; color: rgba(255,255,255,.45); line-height: 1.5; }
+
+    /* ══════════════════════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════════════════════ */
+    .footer {
+      margin-top: 48px;
+      padding: 20px;
+      background: var(--ink);
+      border-radius: 2px;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .footer strong { color: var(--cyan); }
+
+    /* ══════════════════════════════════════════════════════════════
+       ANIMATIONS
+       ══════════════════════════════════════════════════════════════ */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s var(--ease-out-expo), transform .6s var(--ease-out-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delays */
+    .reveal:nth-child(2) { transition-delay: .05s; }
+    .reveal:nth-child(3) { transition-delay: .1s; }
+    .reveal:nth-child(4) { transition-delay: .15s; }
+    .reveal:nth-child(5) { transition-delay: .2s; }
+
+    /* ── Divider ── */
+    .sep {
+      height: 1px;
+      background: repeating-linear-gradient(90deg, var(--ink), var(--ink) 4px, transparent 4px, transparent 8px);
+      opacity: .08;
+      margin: 48px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COVER
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-shield">🛡️</div>
+    <div class="cover-deco">AI</div>
+
+    <div class="cover-eyebrow">서식 2 · 아이디어 제안서</div>
+
+    <h1>
+      <span class="brand">EconoBridge AI</span><br>
+      공공데이터 기반 기업 안전점수<br>
+      자동 분석 및 안전한 일자리<br>
+      추천 AI 에이전트
+    </h1>
+
+    <p class="cover-sub">
+      AI·디지털 기반 산업안전보건 혁신 기술 분야
+    </p>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cm-label">공모전</div>
+        <div class="cm-value">2026 산업안전보건<br>혁신 아이디어 공모전</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cm-label">주최</div>
+        <div class="cm-value">산업안전상생재단</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cm-label">공모주제</div>
+        <div class="cm-value">① AI·디지털 기반<br>산업안전보건 혁신 기술</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     BODY
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="content">
+
+    <!-- Team Info -->
+    <table class="team-tbl">
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>제안명</td><td><strong>EconoBridge AI — 공공데이터 기반 기업 안전점수 자동 분석 및 안전한 일자리 추천 AI 에이전트</strong></td></tr>
+        <tr><td>팀명</td><td>(팀명 기입)</td></tr>
+        <tr><td>팀장</td><td>(이름 / 소속 / 연락처 / 이메일 기입)</td></tr>
+        <tr><td>팀원</td><td>(해당 시 기입)</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ──────── 1. 개요 ──────── -->
+    <div class="sec reveal">
+      <span class="sec-num">01</span>
+      <div class="sec-title">개요</div>
+      <div class="sec-rule"></div>
+    </div>
+
+    <p class="reveal">
+      EconoBridge AI는 구직자가 자연어로 대화하면 AI 에이전트가 <strong>7개 공공데이터 API를 자율적으로 호출</strong>하여
+      채용정보 검색부터 기업 안전성 교차검증까지 한 번에 수행하는 <strong>고용안전 자율 에이전트</strong>입니다.
+    </p>
+
+    <ol class="steps reveal">
+      <li><div><span class="s-title">채용정보 검색</span><span class="s-desc">워크넷 API에서 조건에 맞는 채용공고 탐색</span></div></li>
+      <li><div><span class="s-title">기업 산재이력 조회</span><span class="s-desc">근로복지공단·고용노동부 데이터로 산업재해 이력 확인</span></div></li>
+      <li><div><span class="s-title">안전점수 산출</span><span class="s-desc">산재·중대재해·사망·임금체불을 종합하여 100점 만점 자동 계산</span></div></li>
+      <li><div><span class="s-title">위험기업 경고</span><span class="s-desc">안전점수가 낮은 기업은 명확히 경고 표시</span></div></li>
+      <li><div><span class="s-title">안전한 일자리 추천</span><span class="s-desc">안전점수 기준 정렬된 맞춤 채용 결과 제공</span></div></li>
+    </ol>
+
+    <div class="callout cyan reveal">
+      <p>
+        <strong>핵심 차별점 —</strong> 기존 채용플랫폼이 급여·복리후생 중심인 것과 달리,
+        EconoBridge AI는 <strong>"이 회사는 안전한가?"</strong>라는 질문에 공공데이터 기반 객관적 답을 제공합니다.
+        단순 채용검색이 아닌 <strong>기업 안전성 교차검증의 자동화</strong>가 본 제안의 핵심입니다.
+      </p>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ──────── 2. 추진배경 ──────── -->
+    <div class="sec reveal">
+      <span class="sec-num">02</span>
+      <div class="sec-title">추진배경</div>
+      <div class="sec-rule"></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">2-1</span> 산업재해 현황과 구직자 보호의 사각지대</h3>
+    <p class="reveal">
+      우리나라는 OECD 국가 중 산업재해 사망률이 여전히 높은 수준에 머물러 있습니다.
+      매년 수백 명의 근로자가 산업현장에서 목숨을 잃고 있으며,
+      2022년 중대재해처벌법 시행 이후에도 중대산업사고는 지속 발생하고 있습니다.
+    </p>
+
+    <div class="callout amber reveal">
+      <p>
+        <strong>구직 단계에서 기업의 안전성을 사전 확인할 수 있는 수단은 사실상 전무합니다.</strong>
+        구직자는 급여·근무시간·복리후생은 쉽게 비교할 수 있지만, 해당 기업의 산재이력이나 중대재해 발생 여부는 알기 어렵습니다.
+      </p>
+    </div>
+
+    <h3 class="reveal"><span class="tag">2-2</span> 공공데이터의 분산과 활용 부족</h3>
+    <p class="reveal">기업의 안전 관련 정보는 이미 공공데이터로 존재합니다:</p>
+    <ul class="bl reveal">
+      <li><strong>근로복지공단</strong> — 산재처리현황 공개데이터</li>
+      <li><strong>고용노동부</strong> — 중대산업사고 발생현황, 임금체불 명단</li>
+      <li><strong>한국산업안전보건공단</strong> — 안전보건법령 정보</li>
+    </ul>
+    <p class="reveal">
+      이들 데이터는 각기 다른 기관에 분산되어 있어, 일반 구직자가 통합적으로 조회·비교하기 불가능합니다.
+      <strong>데이터는 있으나 활용되지 못하는 "정보 비대칭"</strong> 상태입니다.
+    </p>
+
+    <h3 class="reveal"><span class="tag">2-3</span> AI 기술의 성숙 — 자율 에이전트</h3>
+    <p class="reveal">
+      LLM 기반 AI 에이전트가 사용자의 자연어 요청을 이해하고
+      <strong>복수의 외부 API를 자율적으로 호출·종합</strong>하는 것이 가능해졌습니다(ReAct 패턴).
+      분산된 공공데이터를 하나의 대화 인터페이스로 통합 활용할 수 있는 기술적 기반이 마련되었습니다.
+    </p>
+
+    <h3 class="reveal"><span class="tag">2-4</span> 재단 공익사업과의 연계</h3>
+    <p class="reveal">
+      산업안전상생재단은 <strong>중소기업 안전역량 강화</strong>를 핵심 미션으로 수행하고 있습니다.
+      EconoBridge AI는 두 가지 측면에서 재단 사업과 직접 연계됩니다:
+    </p>
+    <ul class="bl reveal">
+      <li><strong>구직자 보호 —</strong> 위험 기업을 사전 식별하여 안전한 일자리 선택 지원</li>
+      <li><strong>기업 안전개선 유도 —</strong> 안전점수 가시화로 자발적 안전투자 동기 부여, 저점수 기업을 재단 컨설팅·교육으로 연계</li>
+    </ul>
+
+    <div class="sep"></div>
+
+    <!-- ──────── 3. 상세내용 ──────── -->
+    <div class="sec reveal">
+      <span class="sec-num">03</span>
+      <div class="sec-title">상세내용</div>
+      <div class="sec-rule"></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">3-1</span> 시스템 아키텍처</h3>
+    <p class="reveal">
+      <strong>Next.js 16 + Vercel AI SDK 6 + Claude Sonnet 4.6</strong> 기반 웹 애플리케이션으로 구현되었습니다.
+    </p>
+
+    <div class="blueprint reveal">
+      <div class="bp-flow">
+        <div class="bp-node user">
+          <div class="n-title">👤 사용자 (웹 브라우저)</div>
+          <div class="n-sub">"경기도 IT 개발자 채용 찾아줘"</div>
+        </div>
+        <div class="bp-arrow">▼<br><span style="font-size:10px">자연어 입력</span></div>
+        <div class="bp-node agent">
+          <div class="n-title">EconoBridge AI 에이전트</div>
+          <div class="n-sub">Claude Sonnet 4.6 · ReAct 패턴</div>
+          <div class="bp-chips">
+            <span class="bp-chip">질의 분석</span>
+            <span class="bp-chip">→ 도구 선택</span>
+            <span class="bp-chip">→ 결과 종합</span>
+          </div>
+          <div class="n-sub" style="margin-top:8px;font-size:10px;opacity:.4">최대 10단계 자율 도구 호출 (ToolLoopAgent)</div>
+        </div>
+        <div class="bp-arrow">▼<br><span style="font-size:10px">7개 API 자동 호출</span></div>
+        <div class="bp-tools">
+          <div class="bp-tool"><div class="t-icon">💼</div><div class="t-name">채용정보</div><div class="t-src">워크넷 · 장애인고용공단</div></div>
+          <div class="bp-tool"><div class="t-icon">🛡️</div><div class="t-name">안전정보</div><div class="t-src">근로복지공단 · 고용노동부</div></div>
+          <div class="bp-tool"><div class="t-icon">📚</div><div class="t-name">부가정보</div><div class="t-src">HRD-Net · 안전보건공단</div></div>
+        </div>
+        <div class="bp-arrow">▼<br><span style="font-size:10px">종합 분석</span></div>
+        <div class="bp-node result">
+          <div class="n-title">📊 종합 분석 결과 (실시간 스트리밍)</div>
+          <div class="n-sub">채용공고(안전점수순) · 안전등급 · 위험 경고 · 훈련 추천</div>
+        </div>
+      </div>
+    </div>
+
+    <h4>기술 스택</h4>
+    <div class="tech-row reveal">
+      <span class="tech">Next.js 16.2</span>
+      <span class="tech">React 19.1</span>
+      <span class="tech">Vercel AI SDK 6</span>
+      <span class="tech">Claude Sonnet 4.6</span>
+      <span class="tech">ToolLoopAgent</span>
+      <span class="tech">Zod 3.25</span>
+      <span class="tech">Tailwind CSS 4</span>
+      <span class="tech">TypeScript 5</span>
+      <span class="tech">Vercel Serverless</span>
+    </div>
+
+    <h3 class="reveal"><span class="tag">3-2</span> 7개 AI 도구 상세</h3>
+
+    <table class="dtbl reveal">
+      <thead><tr><th>#</th><th>도구명</th><th>데이터 출처</th><th>주요 기능</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>search_worknet_jobs</code></td><td>워크넷 (한국고용정보원)</td><td>키워드·지역·경력 기반 채용공고 검색</td></tr>
+        <tr><td>2</td><td><code>search_disability_jobs</code></td><td>한국장애인고용공단</td><td>장애유형·근무환경 고려 맞춤 채용검색</td></tr>
+        <tr><td>3</td><td><code>search_training_courses</code></td><td>HRD-Net (산업인력공단)</td><td>K-디지털·내일배움카드 훈련과정 추천</td></tr>
+        <tr><td>4</td><td><code>check_company_safety</code></td><td>근로복지공단 + 고용노동부</td><td class="hl">기업 안전점수 산출 (핵심)</td></tr>
+        <tr><td>5</td><td><code>check_wage_violations</code></td><td>고용노동부</td><td>임금체불 이력·금액·피해자 수 조회</td></tr>
+        <tr><td>6</td><td><code>search_safety_laws</code></td><td>한국산업안전보건공단</td><td>관련 안전보건법령 검색·안내</td></tr>
+        <tr><td>7</td><td><code>generate_cover_letter</code></td><td>AI 생성 (Claude)</td><td>NCS 기반 맞춤 자기소개서 자동 작성</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal"><span class="tag">3-3</span> 안전점수 산출 알고리즘</h3>
+    <p class="reveal">
+      핵심 차별화 요소인 <strong>기업 안전점수 자동 산출 시스템</strong>은
+      근로복지공단 산재처리현황과 고용노동부 중대산업사고 데이터를 교차 분석합니다.
+    </p>
+
+    <div class="code-block reveal">
+      <div class="code-header">
+        <span class="code-dot r"></span>
+        <span class="code-dot y"></span>
+        <span class="code-dot g"></span>
+        <span class="code-filename">lib/tools/safety-check.ts</span>
+      </div>
+      <div class="code-body">
+        <span class="c-comment">// 안전점수 산출 공식</span><br>
+        <span class="c-green">safetyScore = 100</span> <span class="c-comment">// 기본 점수</span><br>
+        <span class="c-red">&nbsp;&nbsp;- accidentCount × 5</span> <span class="c-comment">// 산업재해 건당</span><br>
+        <span class="c-red">&nbsp;&nbsp;- majorAccident × 15</span> <span class="c-comment">// 중대재해 건당</span><br>
+        <span class="c-red">&nbsp;&nbsp;- deathCount × 25</span> <span class="c-comment">// 사망사고 건당</span><br>
+        <span class="c-red">&nbsp;&nbsp;- wageViolation ? 10 : 0</span> <span class="c-comment">// 임금체불</span><br><br>
+        <span class="c-cyan">Math.max(0, Math.min(100, score))</span>
+      </div>
+    </div>
+
+    <div class="grades reveal">
+      <div class="grade ga"><div class="g-letter">A</div><div class="g-range">90+</div><div class="g-label">🟢 안전</div></div>
+      <div class="grade gb"><div class="g-letter">B</div><div class="g-range">70–89</div><div class="g-label">🟡 보통</div></div>
+      <div class="grade gc"><div class="g-letter">C</div><div class="g-range">50–69</div><div class="g-label">🟠 주의</div></div>
+      <div class="grade gd"><div class="g-letter">D</div><div class="g-range">&lt;50</div><div class="g-label">🔴 위험</div></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">3-4</span> 자율 에이전트 워크플로우</h3>
+
+    <div class="workflow reveal">
+      <div class="wf-input">
+        <span class="wf-avatar">👤</span>
+        "경기도에서 IT 웹개발자 채용 찾아줘"
+      </div>
+      <div class="wf-timeline">
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 1</div><div class="wf-txt"><strong>질의 분석</strong> — 프로필 추출 → 장애: 없음, 지역: 경기, 직종: IT</div></div>
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 2</div><div class="wf-txt"><strong>search_worknet_jobs</strong> — 경기도 IT 채용공고 5건 검색</div></div>
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 3–7</div><div class="wf-txt"><strong>check_company_safety ×5</strong> — 5개 기업 안전점수 각각 조회</div></div>
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 8</div><div class="wf-txt"><strong>check_wage_violations</strong> — 임금체불 이력 교차 확인</div></div>
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 9</div><div class="wf-txt"><strong>search_training_courses</strong> — 역량 갭 보완 훈련과정 추천</div></div>
+        <div class="wf-step"><div class="wf-dot"></div><div class="wf-lbl">Step 10</div><div class="wf-txt"><strong>종합 결과 정리</strong> — 안전점수순 정렬 + 경고 + 훈련 안내</div></div>
+      </div>
+    </div>
+
+    <div class="callout green reveal">
+      <p>
+        <strong>장애인 구직자 자동 감지 —</strong> 발화에서 장애 관련 키워드가 감지되면,
+        AI 에이전트가 자동으로 <code style="font-family:var(--mono);background:rgba(0,0,0,.1);padding:1px 6px;border-radius:2px;font-size:12px">search_disability_jobs</code>를 우선 호출하여
+        장애유형과 근무환경 접근성을 고려한 채용정보를 제공합니다.
+      </p>
+    </div>
+
+    <h3 class="reveal"><span class="tag">3-5</span> 활용 시나리오</h3>
+
+    <div class="scenario reveal">
+      <div class="scenario-head"><div class="scenario-icon sa">♿</div><div class="scenario-name">시나리오 A — 장애인 구직자</div></div>
+      <div class="scenario-body">
+        <div class="scenario-query">"서울에서 장애인이 근무할 수 있는 사무직 채용 알려줘"</div>
+        <ul>
+          <li>AI가 장애인 키워드 감지 → <code>search_disability_jobs</code> 우선 호출</li>
+          <li>장애유형별 접근 가능 사무직 채용 5건 검색</li>
+          <li>각 기업 안전점수 자동 조회 → A등급 기업 우선 추천</li>
+          <li>필요시 장애인 직업훈련과정 연계 안내</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="scenario reveal">
+      <div class="scenario-head"><div class="scenario-icon sb">👨‍💻</div><div class="scenario-name">시나리오 B — 청년 구직자</div></div>
+      <div class="scenario-body">
+        <div class="scenario-query">"경기도에서 IT 개발자 채용 찾아줘, 훈련도 추천해줘"</div>
+        <ul>
+          <li><code>search_worknet_jobs</code>로 경기도 IT 채용 검색</li>
+          <li>5개 기업 안전점수 교차검증 → 위험기업 1곳 경고</li>
+          <li><code>search_training_courses</code>로 K-디지털 훈련과정 3건 추천</li>
+          <li>안전점수 기준 정렬된 종합 결과 제공</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="scenario reveal">
+      <div class="scenario-head"><div class="scenario-icon sc">👷</div><div class="scenario-name">시나리오 C — 중장년 전직자</div></div>
+      <div class="scenario-body">
+        <div class="scenario-query">"인천에서 제조업 생산직 일자리 있나요?"</div>
+        <ul>
+          <li><code>search_worknet_jobs</code>로 인천 제조업 채용 검색</li>
+          <li><strong>제조업 특성상 산재 위험 높음</strong> — 안전점수 검증 특히 중요</li>
+          <li>산재이력 기업은 상세 경고와 함께 대안 제시</li>
+          <li>관련 안전보건법령(<code>search_safety_laws</code>) 안내</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ──────── 4. 기대효과 ──────── -->
+    <div class="sec reveal">
+      <span class="sec-num">04</span>
+      <div class="sec-title">기대효과</div>
+      <div class="sec-rule"></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">4-1</span> 구직자 측면</h3>
+
+    <div class="fx-grid reveal">
+      <div class="fx-card"><div class="fx-icon">🛡️</div><div class="fx-title">위험 일자리 사전 회피</div><div class="fx-desc">산재이력·중대재해 기록 기업을 구직 단계에서 사전 식별, 위험한 일자리 취업 예방</div></div>
+      <div class="fx-card"><div class="fx-icon">🔍</div><div class="fx-title">정보 비대칭 해소</div><div class="fx-desc">분산된 공공데이터를 AI가 자동 통합 조회, 구직자에게 투명한 기업 안전 정보 제공</div></div>
+      <div class="fx-card"><div class="fx-icon">🤝</div><div class="fx-title">취약계층 맞춤 지원</div><div class="fx-desc">장애인·청년·중장년 등 취약계층별 특화 채용검색 및 훈련과정 추천</div></div>
+      <div class="fx-card"><div class="fx-icon">📈</div><div class="fx-title">역량 개발 연계</div><div class="fx-desc">채용 요구역량과 구직자 역량 간 갭 분석, 맞춤 훈련과정 함께 추천</div></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">4-2</span> 재단 공익사업 연계</h3>
+
+    <div class="link-box reveal">
+      <div class="link-item">
+        <span class="link-num">1</span>
+        <div class="link-content">
+          <div class="link-title">중소기업 안전수준 가시화 → 자발적 안전개선 유도</div>
+          <ul>
+            <li>안전점수 공개로 저점수 기업은 <strong>우수 인재 확보에 불리</strong></li>
+            <li>"안전한 기업이 좋은 인재를 얻는다" 인식 형성 → 자발적 안전투자 동기 부여</li>
+          </ul>
+        </div>
+      </div>
+      <div class="link-item">
+        <span class="link-num">2</span>
+        <div class="link-content">
+          <div class="link-title">재단 컨설팅·교육 사업 연계</div>
+          <ul>
+            <li>D등급(위험) 기업 → 재단 안전컨설팅 서비스 안내</li>
+            <li>C등급(주의) 기업 → 재단 안전교육 프로그램 안내</li>
+            <li>안전점수 개선 이력 추적 → 재단 사업 성과 측정 지표 활용</li>
+          </ul>
+        </div>
+      </div>
+      <div class="link-item">
+        <span class="link-num">3</span>
+        <div class="link-content">
+          <div class="link-title">안전문화 확산 플랫폼</div>
+          <ul>
+            <li>기업 안전정보 대중화로 산업안전에 대한 사회적 관심 제고</li>
+            <li>구직자·기업·재단 3자 간 선순환 구조 형성</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">4-3</span> 사회적 효과</h3>
+
+    <div class="fx-grid reveal">
+      <div class="fx-card"><div class="fx-icon">⚠️</div><div class="fx-title">중대재해 사전 예방</div><div class="fx-desc">구직 단계 안전정보 제공으로 위험 작업환경에 대한 사회적 감시 기능 수행</div></div>
+      <div class="fx-card"><div class="fx-icon">📊</div><div class="fx-title">공공데이터 활용 우수사례</div><div class="fx-desc">7개 공공데이터 API 통합 활용, 정부 데이터 개방 정책의 실질적 성과</div></div>
+      <div class="fx-card"><div class="fx-icon">⚖️</div><div class="fx-title">법령 실효성 강화</div><div class="fx-desc">산업안전보건법·중대재해처벌법의 취지를 구직자 관점에서 실현</div></div>
+      <div class="fx-card"><div class="fx-icon">🤖</div><div class="fx-title">AI 기술의 공익적 활용</div><div class="fx-desc">AI 에이전트 기술을 산업안전이라는 공익 목적에 활용하는 모범사례</div></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">4-4</span> 실현가능성 — 이미 구현 완료</h3>
+    <p class="reveal">본 제안의 가장 큰 강점은 <strong>아이디어가 아닌 구현 완료된 실제 웹 애플리케이션</strong>이라는 점입니다.</p>
+
+    <div class="feas-grid reveal">
+      <div class="feas-card"><div class="f-icon">✅</div><div class="f-title">개발 완료</div><div class="f-desc">Next.js 16 기반<br>전체 기능 구현</div></div>
+      <div class="feas-card"><div class="f-icon">🚀</div><div class="f-title">즉시 배포</div><div class="f-desc">Vercel 서버리스<br>즉시 배포 가능</div></div>
+      <div class="feas-card"><div class="f-icon">🎬</div><div class="f-title">데모 시연</div><div class="f-desc">실제 동작하는<br>AI 에이전트 시연</div></div>
+      <div class="feas-card"><div class="f-icon">🔧</div><div class="f-title">확장 용이</div><div class="f-desc">새 API 연동 시<br>도구 추가만으로 확장</div></div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- ──────── 5. 관련근거 ──────── -->
+    <div class="sec reveal">
+      <span class="sec-num">05</span>
+      <div class="sec-title">관련근거</div>
+      <div class="sec-rule"></div>
+    </div>
+
+    <h3 class="reveal"><span class="tag">5-1</span> 관련 법령</h3>
+
+    <table class="dtbl reveal">
+      <thead><tr><th>법령</th><th>조항</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>산업안전보건법</strong></td><td>제5조</td><td>사업주 등의 의무 — 산업재해 예방을 위한 안전·보건 기준 준수</td></tr>
+        <tr><td><strong>산업안전보건법</strong></td><td>제10조</td><td>산업재해 발생 기록 및 보고 — 공공데이터로 공개</td></tr>
+        <tr><td><strong>중대재해처벌법</strong></td><td>제4조</td><td>사업주·경영책임자의 안전보건 확보의무</td></tr>
+        <tr><td><strong>공공데이터법</strong></td><td>제1조</td><td>공공데이터 제공·이용 활성화를 통한 국민 삶의 질 향상</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal"><span class="tag">5-2</span> 통계 및 데이터 출처</h3>
+    <ul class="bl reveal">
+      <li>고용노동부, 「산업재해 현황분석」 (매년 발간)</li>
+      <li>근로복지공단, 산재처리현황 공개데이터 (data.go.kr)</li>
+      <li>고용노동부, 체불사업주 명단 공개 (매년 갱신)</li>
+      <li>한국산업안전보건공단, KOSHA-Net 안전보건정보</li>
+    </ul>
+
+    <h3 class="reveal"><span class="tag">5-3</span> 기술 참고자료</h3>
+    <ul class="bl reveal">
+      <li>Vercel AI SDK 6 — ToolLoopAgent, ReAct 패턴</li>
+      <li>Anthropic Claude API — LLM 기반 자율 에이전트</li>
+      <li>Next.js 16 — React 서버 컴포넌트, 스트리밍 응답</li>
+    </ul>
+
+    <h3 class="reveal"><span class="tag">5-4</span> 유사 사례 및 차별점</h3>
+
+    <table class="dtbl reveal">
+      <thead><tr><th>서비스</th><th>특징</th><th>EconoBridge AI 차별점</th></tr></thead>
+      <tbody>
+        <tr><td>워크넷</td><td>공공 채용정보 포털</td><td>채용검색만, 안전성 정보 미제공</td></tr>
+        <tr><td>사람인·잡코리아</td><td>민간 채용플랫폼</td><td>급여·복지 중심, 산재이력 없음</td></tr>
+        <tr><td>KOSHA-Net</td><td>안전보건정보 포털</td><td>법령·정보만, 채용 연계 없음</td></tr>
+        <tr><td><strong>EconoBridge AI</strong></td><td><strong>AI 에이전트 통합</strong></td><td class="hl"><strong>채용 + 안전점수 교차검증 자동화</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      ※ 본 제안서의 EconoBridge AI는 <strong>실제 구현 완료된 웹 애플리케이션</strong>이며, 데모 시연이 가능합니다.
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Scroll Reveal Script
+     ══════════════════════════════════════════════════════════════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
