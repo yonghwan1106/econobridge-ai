@@ -63,6 +63,9 @@ export function ChatContainer() {
             <p className="mt-2 text-[11px] font-medium text-[var(--color-text-muted)]">
               7개 공공데이터 API 연동 · 에이전틱 AI 자율 분석
             </p>
+            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-[11px] font-bold text-amber-700 border border-amber-200">
+              🏆 제5회 고용노동 공공데이터·AI 활용 공모전 참가작
+            </div>
           </div>
           <SuggestedQueries onSelect={handleSuggestion} />
         </div>
