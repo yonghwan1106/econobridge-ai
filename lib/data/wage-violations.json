@@ -1,0 +1,4 @@
+[
+  { "company_name": "B소프트", "owner_name": "김○○", "region": "경기", "violation_date": "2025-06-15", "amount": 12500000, "workers_affected": 3, "status": "미청산", "public_period": "2025-06-15 ~ 2027-06-14" },
+  { "company_name": "G유통", "owner_name": "이○○", "region": "서울", "violation_date": "2025-04-20", "amount": 8000000, "workers_affected": 5, "status": "미청산", "public_period": "2025-04-20 ~ 2027-04-19" }
+]
