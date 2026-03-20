@@ -38,10 +38,16 @@ export function ChatContainer() {
       {messages.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
           <div className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0f6fde] to-[#0b4f9e] text-2xl font-bold text-white shadow-lg">
+            <div
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold shadow-lg"
+              style={{ background: "var(--color-ink)", color: "var(--color-primary)" }}
+            >
               E
             </div>
-            <h2 className="mb-1.5 text-xl font-extrabold tracking-tight text-[var(--color-text)]">
+            <h2
+              className="mb-1.5 text-xl tracking-tight text-[var(--color-text)]"
+              style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}
+            >
               무엇을 도와드릴까요?
             </h2>
             <p className="text-[13px] leading-relaxed text-[var(--color-text-muted)]">
@@ -54,7 +60,8 @@ export function ChatContainer() {
               {API_BADGES.map((name) => (
                 <span
                   key={name}
-                  className="rounded-full bg-[var(--color-primary-dim)] px-2.5 py-1 text-[10px] font-semibold text-[var(--color-primary)] border border-[var(--color-primary)]/10"
+                  className="rounded-full px-2.5 py-1 text-[10px] font-semibold"
+                  style={{ background: "var(--color-primary-dim)", color: "var(--color-primary)", border: "1px solid rgba(0,212,170,.15)" }}
                 >
                   {name}
                 </span>
@@ -63,7 +70,7 @@ export function ChatContainer() {
             <p className="mt-2 text-[11px] font-medium text-[var(--color-text-muted)]">
               7개 공공데이터 API 연동 · 에이전틱 AI 자율 분석
             </p>
-            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-[11px] font-bold text-amber-700 border border-amber-200">
+            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold" style={{ background: "rgba(255,140,66,.08)", color: "#ff8c42", border: "1px solid rgba(255,140,66,.2)" }}>
               🏆 제5회 고용노동 공공데이터·AI 활용 공모전 참가작
             </div>
           </div>

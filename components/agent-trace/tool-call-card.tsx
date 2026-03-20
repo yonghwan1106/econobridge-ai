@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 
 const TOOL_LABELS: Record<string, { label: string; icon: string; color: string }> = {
-  search_worknet_jobs: { label: "고용24 채용검색", icon: "💼", color: "#0f6fde" },
+  search_worknet_jobs: { label: "고용24 채용검색", icon: "💼", color: "#00d4aa" },
   search_disability_jobs: { label: "장애인 채용검색", icon: "♿", color: "#7c3aed" },
   search_training_courses: { label: "훈련과정 검색", icon: "📚", color: "#0891b2" },
   check_company_safety: { label: "기업 안전성 분석", icon: "🛡️", color: "#059669" },

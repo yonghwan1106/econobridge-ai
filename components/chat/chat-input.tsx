@@ -37,7 +37,8 @@ export function ChatInput({
       <button
         type="submit"
         disabled={isLoading || !input.trim()}
-        className="flex h-[46px] w-[46px] flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0f6fde] to-[#0b4f9e] text-white shadow-sm transition-all hover:shadow-md active:scale-95 disabled:opacity-40 disabled:shadow-none"
+        className="flex h-[46px] w-[46px] flex-shrink-0 items-center justify-center rounded-xl text-white shadow-sm transition-all hover:shadow-md active:scale-95 disabled:opacity-40 disabled:shadow-none"
+        style={{ background: "var(--color-ink)" }}
       >
         {isLoading ? (
           <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">

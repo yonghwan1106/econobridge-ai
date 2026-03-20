@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #0f6fde;
-  --color-primary-light: #3b8eed;
-  --color-primary-dim: rgba(15,111,222,.06);
-  --color-bg: #f8fafc;
-  --color-bg-secondary: #f1f5f9;
+  --color-primary: #00d4aa;
+  --color-primary-light: #33e0be;
+  --color-primary-dim: rgba(0,212,170,.08);
+  --color-ink: #0c1222;
+  --color-ink-80: #1a2540;
+  --color-bg: #f7f6f3;
+  --color-bg-secondary: #eef1f5;
   --color-bg-chat: #ffffff;
   --color-text: #0f172a;
   --color-text-secondary: #334155;
@@ -64,9 +66,9 @@ body {
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(15,111,222,.25); }
-  70% { box-shadow: 0 0 0 6px rgba(15,111,222,0); }
-  100% { box-shadow: 0 0 0 0 rgba(15,111,222,0); }
+  0% { box-shadow: 0 0 0 0 rgba(0,212,170,.3); }
+  70% { box-shadow: 0 0 0 6px rgba(0,212,170,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,212,170,0); }
 }
 .pulse-ring { animation: pulse-ring 1.5s infinite; }
 

@@ -14,7 +14,7 @@ export function MessageBubble({ message }: { message: UIMessage }) {
     >
       {/* AI Avatar */}
       {!isUser && (
-        <div className="mr-2.5 mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#0f6fde] to-[#0b4f9e] text-[11px] font-bold text-white">
+        <div className="mr-2.5 mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg text-[11px] font-bold" style={{ background: "var(--color-ink)", color: "var(--color-primary)" }}>
           E
         </div>
       )}
@@ -22,7 +22,7 @@ export function MessageBubble({ message }: { message: UIMessage }) {
       <div
         className={`max-w-[82%] text-[14px] leading-relaxed ${
           isUser
-            ? "rounded-2xl rounded-tr-md bg-gradient-to-br from-[#0f6fde] to-[#1a7aef] px-4 py-2.5 text-white shadow-sm"
+            ? "rounded-2xl rounded-tr-md bg-gradient-to-br from-[#0c1222] to-[#1a2540] px-4 py-2.5 text-white shadow-sm"
             : "ai-prose"
         }`}
       >
