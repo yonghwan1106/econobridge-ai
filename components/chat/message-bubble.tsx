@@ -73,19 +73,107 @@ export function MessageBubble({ message }: { message: UIMessage }) {
   );
 }
 
-/** Simple markdown-like text formatter */
+/** Markdown text formatter with table, blockquote, and list support */
 function formatMarkdown(text: string): string {
-  return text
-    // Bold
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Headers
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    // Horizontal rule
-    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--color-border);margin:0.8em 0"/>')
-    // Emoji bullets (keep as-is, they render nicely)
-    ;
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // ── Table block: consecutive lines starting with |
+    if (/^\s*\|/.test(line)) {
+      const tableLines: string[] = [];
+      while (i < lines.length && /^\s*\|/.test(lines[i])) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      result.push(buildTable(tableLines));
+      continue;
+    }
+
+    // ── Blockquote: lines starting with >
+    if (/^>\s?/.test(line)) {
+      const content = line.replace(/^>\s?/, "").trim();
+      if (content) {
+        result.push(`<div style="padding:2px 0 2px 12px;border-left:3px solid var(--color-primary);margin:2px 0">${inlineFormat(content)}</div>`);
+      }
+      i++;
+      continue;
+    }
+
+    // ── Unordered list: lines starting with -
+    if (/^\s*- /.test(line)) {
+      const listItems: string[] = [];
+      while (i < lines.length && /^\s*- /.test(lines[i])) {
+        listItems.push(lines[i].replace(/^\s*- /, "").trim());
+        i++;
+      }
+      result.push(
+        "<ul>" +
+          listItems.map((item) => `<li>${inlineFormat(item)}</li>`).join("") +
+          "</ul>"
+      );
+      continue;
+    }
+
+    // ── Regular line
+    result.push(inlineFormat(line));
+    i++;
+  }
+
+  return result.join("\n");
+}
+
+/** Inline formatting: bold, headers, code, hr */
+function inlineFormat(line: string): string {
+  return (
+    line
+      // Bold
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      // Headers
+      .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+      .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+      .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+      // Inline code
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      // Horizontal rule
+      .replace(
+        /^---$/gm,
+        '<hr style="border:none;border-top:1px solid var(--color-border);margin:0.8em 0"/>'
+      )
+  );
+}
+
+/** Build an HTML table from markdown table lines */
+function buildTable(lines: string[]): string {
+  // Filter out separator lines (|---|---|)
+  const dataLines = lines.filter((l) => !/^\s*\|[\s\-:|]+\|\s*$/.test(l));
+  if (dataLines.length === 0) return "";
+
+  const parseRow = (line: string) =>
+    line
+      .replace(/^\s*\|/, "")
+      .replace(/\|\s*$/, "")
+      .split("|")
+      .map((cell) => cell.trim());
+
+  const headerCells = parseRow(dataLines[0]);
+  const bodyRows = dataLines.slice(1).map(parseRow);
+
+  let html = "<table><thead><tr>";
+  for (const cell of headerCells) {
+    html += `<th>${inlineFormat(cell)}</th>`;
+  }
+  html += "</tr></thead><tbody>";
+  for (const row of bodyRows) {
+    html += "<tr>";
+    for (const cell of row) {
+      html += `<td>${inlineFormat(cell)}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</tbody></table>";
+  return html;
 }
