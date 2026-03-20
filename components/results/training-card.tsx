@@ -16,29 +16,30 @@ export function TrainingCard({
   trainingType?: string;
 }) {
   return (
-    <div className="rounded-xl border border-[var(--color-border)] p-4 transition-shadow hover:shadow-md">
+    <div className="group rounded-xl border border-[var(--color-border)] bg-white p-4 transition-all hover:border-[#0891b2] hover:shadow-md">
       {trainingType && (
-        <div className="mb-1 inline-block rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+        <span className="mb-2 inline-block rounded-md bg-cyan-50 px-2 py-0.5 text-[11px] font-bold text-cyan-700 border border-cyan-200">
           {trainingType}
-        </div>
+        </span>
       )}
-      <h3 className="mb-2 text-sm font-semibold text-[var(--color-text)]">
+      <h3 className="mb-3 text-[14px] font-bold leading-snug text-[var(--color-text)] group-hover:text-[#0891b2]">
         {title}
       </h3>
-      <div className="flex flex-wrap gap-2 text-xs text-[var(--color-text-muted)]">
-        <span className="rounded bg-[var(--color-bg-secondary)] px-2 py-0.5">
-          🏫 {institution}
-        </span>
-        <span className="rounded bg-[var(--color-bg-secondary)] px-2 py-0.5">
-          📍 {region}
-        </span>
-        <span className="rounded bg-[var(--color-bg-secondary)] px-2 py-0.5">
-          ⏱ {duration}
-        </span>
-        <span className="rounded bg-[var(--color-bg-secondary)] px-2 py-0.5">
-          💰 {cost}
-        </span>
+      <div className="flex flex-wrap gap-1.5">
+        <Tag icon="🏫" text={institution} />
+        <Tag icon="📍" text={region} />
+        <Tag icon="⏱" text={duration} />
+        <Tag icon="💰" text={cost} />
       </div>
     </div>
+  );
+}
+
+function Tag({ icon, text }: { icon: string; text: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-md bg-[var(--color-bg-secondary)] px-2 py-1 text-[11px] font-medium text-[var(--color-text-secondary)]">
+      <span className="text-[12px]">{icon}</span>
+      {text}
+    </span>
   );
 }
