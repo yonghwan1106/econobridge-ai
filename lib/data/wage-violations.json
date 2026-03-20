@@ -1,4 +1,7 @@
 [
   { "company_name": "B소프트", "owner_name": "김○○", "region": "경기", "violation_date": "2025-06-15", "amount": 12500000, "workers_affected": 3, "status": "미청산", "public_period": "2025-06-15 ~ 2027-06-14" },
-  { "company_name": "G유통", "owner_name": "이○○", "region": "서울", "violation_date": "2025-04-20", "amount": 8000000, "workers_affected": 5, "status": "미청산", "public_period": "2025-04-20 ~ 2027-04-19" }
+  { "company_name": "G유통", "owner_name": "이○○", "region": "서울", "violation_date": "2025-04-20", "amount": 8000000, "workers_affected": 5, "status": "미청산", "public_period": "2025-04-20 ~ 2027-04-19" },
+  { "company_name": "G유통", "owner_name": "이○○", "region": "서울", "violation_date": "2025-09-10", "amount": 5500000, "workers_affected": 3, "status": "미청산", "public_period": "2025-09-10 ~ 2027-09-09" },
+  { "company_name": "I물류", "owner_name": "박○○", "region": "경기", "violation_date": "2025-03-05", "amount": 15000000, "workers_affected": 8, "status": "미청산", "public_period": "2025-03-05 ~ 2027-03-04" },
+  { "company_name": "H제조", "owner_name": "최○○", "region": "인천", "violation_date": "2025-08-01", "amount": 22000000, "workers_affected": 12, "status": "미청산", "public_period": "2025-08-01 ~ 2027-07-31" }
 ]

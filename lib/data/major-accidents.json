@@ -1,4 +1,6 @@
 [
   { "company_name": "B소프트", "industry": "정보통신업", "region": "경기", "accident_type": "추락", "accident_date": "2025-08-22", "death_count": 0, "injury_count": 1 },
-  { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "붕괴", "accident_date": "2025-09-18", "death_count": 1, "injury_count": 2 }
+  { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "붕괴", "accident_date": "2025-09-18", "death_count": 1, "injury_count": 2 },
+  { "company_name": "H제조", "industry": "제조업", "region": "인천", "accident_type": "화학물질 누출", "accident_date": "2025-07-20", "death_count": 1, "injury_count": 3 },
+  { "company_name": "H제조", "industry": "제조업", "region": "인천", "accident_type": "화재", "accident_date": "2025-10-08", "death_count": 0, "injury_count": 2 }
 ]

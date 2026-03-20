@@ -5,6 +5,16 @@ export const metadata: Metadata = {
   title: "EconoBridge AI — 고용안전 자율 에이전트",
   description:
     "공공데이터 기반 맞춤 채용정보 검색, 기업 안전성 분석, 훈련과정 추천을 제공하는 AI 에이전트",
+  openGraph: {
+    title: "EconoBridge AI — 고용안전 자율 에이전트",
+    description:
+      "7개 공공데이터 API를 활용한 맞춤 채용정보 검색, 기업 안전성 분석, 훈련과정 추천 AI 에이전트",
+    type: "website",
+    locale: "ko_KR",
+  },
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌉</text></svg>",
+  },
 };
 
 export default function RootLayout({

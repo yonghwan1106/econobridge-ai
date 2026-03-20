@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 const TOOL_LABELS: Record<string, { label: string; icon: string; color: string }> = {
   search_worknet_jobs: { label: "고용24 채용검색", icon: "💼", color: "#0f6fde" },
   search_disability_jobs: { label: "장애인 채용검색", icon: "♿", color: "#7c3aed" },
@@ -14,10 +16,12 @@ export function ToolCallCard({
   toolName,
   args,
   result,
+  children,
 }: {
   toolName: string;
   args: Record<string, unknown>;
   result?: unknown;
+  children?: ReactNode;
 }) {
   const info = TOOL_LABELS[toolName] ?? { label: toolName, icon: "🔧", color: "#64748b" };
   const isDone = result != null;
@@ -58,6 +62,7 @@ export function ToolCallCard({
             ))}
         </div>
       )}
+      {children}
     </div>
   );
 }

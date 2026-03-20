@@ -3,5 +3,11 @@
   { "company_name": "B소프트", "industry": "정보통신업", "region": "경기", "accident_type": "충돌", "accident_date": "2025-08-22", "workers_affected": 1 },
   { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "추락", "accident_date": "2025-01-10", "workers_affected": 2 },
   { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "추락", "accident_date": "2025-06-05", "workers_affected": 1 },
-  { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "붕괴", "accident_date": "2025-09-18", "workers_affected": 3 }
+  { "company_name": "F건설", "industry": "건설업", "region": "서울", "accident_type": "붕괴", "accident_date": "2025-09-18", "workers_affected": 3 },
+  { "company_name": "G유통", "industry": "도소매업", "region": "서울", "accident_type": "끼임", "accident_date": "2025-04-12", "workers_affected": 1 },
+  { "company_name": "G유통", "industry": "도소매업", "region": "서울", "accident_type": "전도", "accident_date": "2025-11-03", "workers_affected": 1 },
+  { "company_name": "H제조", "industry": "제조업", "region": "인천", "accident_type": "화학물질 누출", "accident_date": "2025-07-20", "workers_affected": 4 },
+  { "company_name": "H제조", "industry": "제조업", "region": "인천", "accident_type": "끼임", "accident_date": "2025-02-14", "workers_affected": 1 },
+  { "company_name": "H제조", "industry": "제조업", "region": "인천", "accident_type": "화재", "accident_date": "2025-10-08", "workers_affected": 2 },
+  { "company_name": "I물류", "industry": "운수업", "region": "경기", "accident_type": "충돌", "accident_date": "2025-05-25", "workers_affected": 1 }
 ]

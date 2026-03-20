@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import type { UIMessage } from "ai";
 import { ToolCallCard } from "@/components/agent-trace/tool-call-card";
+import { renderToolResult } from "@/components/results/tool-result-renderer";
 
 export function MessageBubble({ message }: { message: UIMessage }) {
   const isUser = message.role === "user";
@@ -33,7 +35,6 @@ export function MessageBubble({ message }: { message: UIMessage }) {
                 </div>
               );
             }
-            // AI: render with markdown-like formatting via dangerouslySetInnerHTML
             return (
               <div
                 key={i}
@@ -53,16 +54,13 @@ export function MessageBubble({ message }: { message: UIMessage }) {
               output?: unknown;
             };
             const toolName = part.type.replace("tool-", "");
+            const isDone = toolPart.state === "output-available";
             return (
-              <ToolCallCard
+              <ToolResultWrapper
                 key={i}
                 toolName={toolName}
                 args={(toolPart.input as Record<string, unknown>) ?? {}}
-                result={
-                  toolPart.state === "output-available"
-                    ? toolPart.output
-                    : undefined
-                }
+                result={isDone ? toolPart.output : undefined}
               />
             );
           }
@@ -71,6 +69,62 @@ export function MessageBubble({ message }: { message: UIMessage }) {
       </div>
     </div>
   );
+}
+
+/** Wraps ToolCallCard + rich result with collapse toggle */
+function ToolResultWrapper({
+  toolName,
+  args,
+  result,
+}: {
+  toolName: string;
+  args: Record<string, unknown>;
+  result?: unknown;
+}) {
+  const [collapsed, setCollapsed] = useState(false);
+  const isDone = result != null;
+  const richResult = isDone ? renderToolResult(toolName, result) : null;
+
+  return (
+    <div>
+      <ToolCallCard toolName={toolName} args={args} result={result}>
+        {isDone && richResult && (
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="flex w-full items-center justify-center gap-1 border-t border-[var(--color-border-light)] py-1.5 text-[11px] font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)]"
+          >
+            {collapsed ? "▼ 결과 펼치기" : "▲ 결과 접기"}
+          </button>
+        )}
+      </ToolCallCard>
+      {isDone && richResult && !collapsed && (
+        <div className="animate-fade-in">{richResult}</div>
+      )}
+    </div>
+  );
+}
+
+// ── Regex constants (compiled once) ──
+const RE_TABLE_LINE = /^\s*\|/;
+const RE_BLOCKQUOTE = /^>\s?/;
+const RE_LIST_ITEM = /^\s*- /;
+const RE_SEPARATOR = /^\s*\|[\s\-:|]+\|\s*$/;
+const RE_BOLD = /\*\*(.*?)\*\*/g;
+const RE_H3 = /^### (.+)$/;
+const RE_H2 = /^## (.+)$/;
+const RE_H1 = /^# (.+)$/;
+const RE_CODE = /`([^`]+)`/g;
+const RE_HR = /^---$/;
+const HR_HTML =
+  '<hr style="border:none;border-top:1px solid var(--color-border);margin:0.8em 0"/>';
+
+/** Escape HTML entities to prevent XSS */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 /** Markdown text formatter with table, blockquote, and list support */
@@ -82,10 +136,9 @@ function formatMarkdown(text: string): string {
   while (i < lines.length) {
     const line = lines[i];
 
-    // ── Table block: consecutive lines starting with |
-    if (/^\s*\|/.test(line)) {
+    if (RE_TABLE_LINE.test(line)) {
       const tableLines: string[] = [];
-      while (i < lines.length && /^\s*\|/.test(lines[i])) {
+      while (i < lines.length && RE_TABLE_LINE.test(lines[i])) {
         tableLines.push(lines[i]);
         i++;
       }
@@ -93,33 +146,32 @@ function formatMarkdown(text: string): string {
       continue;
     }
 
-    // ── Blockquote: lines starting with >
-    if (/^>\s?/.test(line)) {
-      const content = line.replace(/^>\s?/, "").trim();
-      if (content) {
-        result.push(`<div style="padding:2px 0 2px 12px;border-left:3px solid var(--color-primary);margin:2px 0">${inlineFormat(content)}</div>`);
-      }
+    if (RE_BLOCKQUOTE.test(line)) {
+      const content = line.replace(RE_BLOCKQUOTE, "").trim();
+      result.push(
+        `<div style="padding:2px 0 2px 12px;border-left:3px solid var(--color-primary);margin:2px 0">${content ? inlineFormat(escapeHtml(content)) : "&nbsp;"}</div>`
+      );
       i++;
       continue;
     }
 
-    // ── Unordered list: lines starting with -
-    if (/^\s*- /.test(line)) {
+    if (RE_LIST_ITEM.test(line)) {
       const listItems: string[] = [];
-      while (i < lines.length && /^\s*- /.test(lines[i])) {
-        listItems.push(lines[i].replace(/^\s*- /, "").trim());
+      while (i < lines.length && RE_LIST_ITEM.test(lines[i])) {
+        listItems.push(lines[i].replace(RE_LIST_ITEM, "").trim());
         i++;
       }
       result.push(
         "<ul>" +
-          listItems.map((item) => `<li>${inlineFormat(item)}</li>`).join("") +
+          listItems
+            .map((item) => `<li>${inlineFormat(escapeHtml(item))}</li>`)
+            .join("") +
           "</ul>"
       );
       continue;
     }
 
-    // ── Regular line
-    result.push(inlineFormat(line));
+    result.push(inlineFormat(escapeHtml(line)));
     i++;
   }
 
@@ -128,28 +180,18 @@ function formatMarkdown(text: string): string {
 
 /** Inline formatting: bold, headers, code, hr */
 function inlineFormat(line: string): string {
-  return (
-    line
-      // Bold
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      // Headers
-      .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-      .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-      .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-      // Inline code
-      .replace(/`([^`]+)`/g, "<code>$1</code>")
-      // Horizontal rule
-      .replace(
-        /^---$/gm,
-        '<hr style="border:none;border-top:1px solid var(--color-border);margin:0.8em 0"/>'
-      )
-  );
+  return line
+    .replace(RE_BOLD, "<strong>$1</strong>")
+    .replace(RE_H3, "<h3>$1</h3>")
+    .replace(RE_H2, "<h2>$1</h2>")
+    .replace(RE_H1, "<h1>$1</h1>")
+    .replace(RE_CODE, "<code>$1</code>")
+    .replace(RE_HR, HR_HTML);
 }
 
 /** Build an HTML table from markdown table lines */
 function buildTable(lines: string[]): string {
-  // Filter out separator lines (|---|---|)
-  const dataLines = lines.filter((l) => !/^\s*\|[\s\-:|]+\|\s*$/.test(l));
+  const dataLines = lines.filter((l) => !RE_SEPARATOR.test(l));
   if (dataLines.length === 0) return "";
 
   const parseRow = (line: string) =>
@@ -162,18 +204,18 @@ function buildTable(lines: string[]): string {
   const headerCells = parseRow(dataLines[0]);
   const bodyRows = dataLines.slice(1).map(parseRow);
 
-  let html = "<table><thead><tr>";
+  const parts: string[] = ["<table><thead><tr>"];
   for (const cell of headerCells) {
-    html += `<th>${inlineFormat(cell)}</th>`;
+    parts.push(`<th>${inlineFormat(escapeHtml(cell))}</th>`);
   }
-  html += "</tr></thead><tbody>";
+  parts.push("</tr></thead><tbody>");
   for (const row of bodyRows) {
-    html += "<tr>";
+    parts.push("<tr>");
     for (const cell of row) {
-      html += `<td>${inlineFormat(cell)}</td>`;
+      parts.push(`<td>${inlineFormat(escapeHtml(cell))}</td>`);
     }
-    html += "</tr>";
+    parts.push("</tr>");
   }
-  html += "</tbody></table>";
-  return html;
+  parts.push("</tbody></table>");
+  return parts.join("");
 }

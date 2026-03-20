@@ -40,6 +40,11 @@ const MOCK_DATA: Record<
   C디지털: { accidents: 1, major: 0, deaths: 0, wage: false },
   D솔루션즈: { accidents: 0, major: 0, deaths: 0, wage: false },
   E이노베이션: { accidents: 0, major: 0, deaths: 0, wage: false },
+  F건설: { accidents: 3, major: 1, deaths: 1, wage: false },
+  G유통: { accidents: 2, major: 0, deaths: 0, wage: true },
+  H제조: { accidents: 3, major: 2, deaths: 1, wage: true },
+  I물류: { accidents: 1, major: 0, deaths: 0, wage: true },
+  J서비스: { accidents: 0, major: 0, deaths: 0, wage: false },
 };
 
 export const checkCompanySafety = tool({
