@@ -6,18 +6,18 @@ import {
   findRegionCode,
 } from "@/lib/constants/region-codes";
 
-const WORKNET_BASE_URL = "http://openapi.work.go.kr/opi/opi/opia/wantedApi.do";
+const WORK24_BASE_URL = "http://openapi.work.go.kr/opi/opi/opia/wantedApi.do";
 
 export const searchWorknetJobs = tool({
   description:
-    "워크넷에서 채용공고를 검색합니다 (한국고용정보원). 키워드, 지역, 경력 조건으로 검색할 수 있습니다.",
+    "고용24(구 워크넷)에서 채용공고를 검색합니다 (한국고용정보원). 키워드, 지역, 경력 조건으로 검색할 수 있습니다.",
   inputSchema: z.object({
     keyword: z.string().describe("검색 키워드 (직종, 직무명 등)"),
     region: z.string().default("").describe("희망 근무지역 (예: 서울, 경기)"),
     career: z.string().default("").describe("경력 조건 (신입, 경력, 무관)"),
   }),
   execute: async ({ keyword, region, career }) => {
-    const apiKey = process.env.WORKNET_API_KEY ?? "";
+    const apiKey = process.env.WORK24_JOB_API_KEY ?? "";
 
     if (!apiKey) {
       return mockWorknetResponse(keyword, region);
@@ -45,7 +45,7 @@ export const searchWorknetJobs = tool({
     }
 
     try {
-      const resp = await fetch(`${WORKNET_BASE_URL}?${params}`, {
+      const resp = await fetch(`${WORK24_BASE_URL}?${params}`, {
         signal: AbortSignal.timeout(10000),
       });
       const text = await resp.text();
@@ -66,7 +66,7 @@ export const searchWorknetJobs = tool({
       }));
 
       return {
-        source: "워크넷 (한국고용정보원)",
+        source: "고용24 채용정보 (한국고용정보원)",
         total: parseInt(root.total ?? "0", 10),
         jobs,
       };
@@ -107,7 +107,7 @@ function mockWorknetResponse(keyword: string, region: string, error?: string) {
     },
   ];
   return {
-    source: "워크넷 (한국고용정보원)",
+    source: "고용24 채용정보 (한국고용정보원)",
     total: mockJobs.length,
     jobs: mockJobs,
     note: error
