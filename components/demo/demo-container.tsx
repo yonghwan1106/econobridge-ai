@@ -73,8 +73,7 @@ export function DemoContainer() {
         {/* ── Left: DAG + Process panel (fixed, never scrolls with chat) ── */}
         <aside
           className="hidden shrink-0 flex-col border-r border-[var(--color-border)] md:flex"
-          style={{ width: "50%" }}
-          style={{ background: "var(--color-bg)" }}
+          style={{ width: "50%", background: "var(--color-bg)" }}
         >
           {/* DAG Workflow */}
           <div className="flex-1 overflow-y-auto p-4">
