@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
+import { useSearchParams } from "next/navigation";
 import type { DemoScenario } from "@/lib/demo/scenarios";
 import { DEMO_SCENARIOS } from "@/lib/demo/scenarios";
 import { messagesToDagState } from "@/lib/dag/message-bridge";
@@ -13,10 +14,10 @@ import { MessageList } from "@/components/chat/message-list";
 import { ChatInput } from "@/components/chat/chat-input";
 
 export function DemoContainer() {
-  const [activeScenario, setActiveScenario] = useState<DemoScenario | null>(
-    null
-  );
+  const searchParams = useSearchParams();
+  const [started, setStarted] = useState(false);
   const [input, setInput] = useState("");
+  const autoStartedRef = useRef(false);
 
   const { messages, sendMessage, status, setMessages } = useChat();
   const isLoading = status === "streaming" || status === "submitted";
@@ -29,18 +30,31 @@ export function DemoContainer() {
     [messages]
   );
 
+  // Auto-start from ?q= parameter (home page redirect)
+  useEffect(() => {
+    if (autoStartedRef.current) return;
+    const q = searchParams.get("q");
+    if (q) {
+      autoStartedRef.current = true;
+      setStarted(true);
+      sendMessage({ text: q });
+    }
+  }, [searchParams, sendMessage]);
+
   const handleScenarioSelect = useCallback(
     (scenario: DemoScenario) => {
-      setActiveScenario(scenario);
+      setStarted(true);
       sendMessage({ text: scenario.initialMessage });
     },
     [sendMessage]
   );
 
   const handleReset = useCallback(() => {
-    setActiveScenario(null);
+    setStarted(false);
     setInput("");
     setMessages([]);
+    // Clear query param
+    window.history.replaceState({}, "", "/demo");
   }, [setMessages]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,11 +62,12 @@ export function DemoContainer() {
     const text = input.trim();
     if (!text || isLoading) return;
     setInput("");
+    if (!started) setStarted(true);
     sendMessage({ text });
   };
 
   // Scenario selection view
-  if (!activeScenario) {
+  if (!started) {
     return (
       <div className="flex h-full flex-col">
         <DemoHeader onReset={handleReset} />
@@ -70,10 +85,10 @@ export function DemoContainer() {
       <DemoHeader onReset={handleReset} />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* ── Left: DAG + Process panel (fixed, never scrolls with chat) ── */}
+        {/* ── Left: DAG + Process panel (fixed, 35% width) ── */}
         <aside
           className="hidden shrink-0 flex-col border-r border-[var(--color-border)] md:flex"
-          style={{ width: "50%", background: "var(--color-bg)" }}
+          style={{ width: "35%", background: "var(--color-bg)" }}
         >
           {/* DAG Workflow */}
           <div className="flex-1 overflow-y-auto p-4">
@@ -86,7 +101,10 @@ export function DemoContainer() {
             style={{ maxHeight: "35%" }}
           >
             <div className="px-4 py-3">
-              <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+              <h3
+                className="mb-2 text-[11px] font-bold uppercase tracking-wider"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 작업 프로세스
               </h3>
               <div className="space-y-1.5">
@@ -95,7 +113,7 @@ export function DemoContainer() {
                   .map((node) => (
                     <div
                       key={node.id}
-                      className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs"
+                      className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[13px]"
                       style={{
                         background:
                           node.status === "running"
@@ -112,7 +130,7 @@ export function DemoContainer() {
                           style={{ background: "var(--color-primary)" }}
                         />
                       ) : node.status === "complete" ? (
-                        <span className="text-[10px]" style={{ color: "var(--color-safe)" }}>
+                        <span className="text-[11px] font-bold" style={{ color: "var(--color-safe)" }}>
                           ✓
                         </span>
                       ) : (
@@ -123,32 +141,32 @@ export function DemoContainer() {
                       )}
                       <span className="mr-1">{node.icon}</span>
                       <span
-                        className="flex-1 font-medium"
+                        className="flex-1 font-semibold"
                         style={{
                           color:
                             node.status === "running"
-                              ? "var(--color-primary)"
+                              ? "var(--color-text)"
                               : node.status === "complete"
-                                ? "var(--color-safe)"
+                                ? "var(--color-text)"
                                 : "var(--color-text-muted)",
                         }}
                       >
                         {node.label}
                       </span>
                       {node.status === "running" && (
-                        <span className="thinking-dots text-[var(--color-primary)]">
+                        <span className="thinking-dots font-bold" style={{ color: "var(--color-primary)" }}>
                           <span>.</span><span>.</span><span>.</span>
                         </span>
                       )}
                       {node.status === "complete" && node.completedAt && node.startedAt && (
-                        <span className="text-[10px] text-[var(--color-text-muted)]">
+                        <span className="text-[10px] font-medium text-[var(--color-text-muted)]">
                           {((node.completedAt - node.startedAt) / 1000).toFixed(1)}s
                         </span>
                       )}
                     </div>
                   ))}
                 {dagState.nodes.every((n) => n.status === "idle") && (
-                  <div className="py-2 text-center text-[11px] text-[var(--color-text-muted)]">
+                  <div className="py-2 text-center text-[12px] text-[var(--color-text-muted)]">
                     시나리오 실행 대기 중...
                   </div>
                 )}

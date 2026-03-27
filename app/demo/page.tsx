@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { DemoContainer } from "@/components/demo/demo-container";
 
 export const metadata = {
@@ -9,7 +10,9 @@ export const metadata = {
 export default function DemoPage() {
   return (
     <main className="h-dvh">
-      <DemoContainer />
+      <Suspense>
+        <DemoContainer />
+      </Suspense>
     </main>
   );
 }

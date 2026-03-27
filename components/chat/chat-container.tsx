@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useChat } from "@ai-sdk/react";
+import { useRouter } from "next/navigation";
 import { MessageList } from "./message-list";
 import { ChatInput } from "./chat-input";
 import { SuggestedQueries } from "./suggested-queries";
@@ -11,6 +12,7 @@ const API_BADGES = [
 ];
 
 export function ChatContainer() {
+  const router = useRouter();
   const { messages, sendMessage, status, setMessages } = useChat();
   const [input, setInput] = useState("");
 
@@ -21,12 +23,14 @@ export function ChatContainer() {
     const text = input.trim();
     if (!text || isLoading) return;
     setInput("");
-    sendMessage({ text });
+    // Navigate to demo with the query
+    router.push(`/demo?q=${encodeURIComponent(text)}`);
   };
 
   const handleSuggestion = (query: string) => {
     if (isLoading) return;
-    sendMessage({ text: query });
+    // Navigate to demo with the selected query
+    router.push(`/demo?q=${encodeURIComponent(query)}`);
   };
 
   const handleNewChat = () => {

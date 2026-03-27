@@ -179,14 +179,20 @@ export function DagView({ dagState }: { dagState: DagState }) {
             {/* Label below node */}
             <text
               x={pos.x}
-              y={pos.y + NODE_RADIUS + 14}
+              y={pos.y + NODE_RADIUS + 15}
               textAnchor="middle"
-              fontSize={11}
-              fill={style.textFill === "#FFFFFF" ? "#475569" : style.textFill}
+              fontSize={12}
+              fill={
+                node.status === "running" || node.status === "complete"
+                  ? "#0f172a"
+                  : node.status === "skipped"
+                    ? "#cbd5e1"
+                    : "#475569"
+              }
               fontWeight={
                 node.status === "running" || node.status === "complete"
-                  ? 600
-                  : 400
+                  ? 700
+                  : 500
               }
               style={{
                 textDecoration:
