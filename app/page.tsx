@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ChatContainer } from "@/components/chat/chat-container";
 
 export default function Home() {
@@ -37,10 +38,13 @@ export default function Home() {
           <span className="hidden sm:inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(0,212,170,.1)", color: "var(--color-primary)", border: "1px solid rgba(0,212,170,.2)" }}>
             🔗 7개 API
           </span>
-          <div className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(46,196,182,.1)", color: "#2ec4b6", border: "1px solid rgba(46,196,182,.2)" }}>
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#2ec4b6" }} />
-            온라인
-          </div>
+          <Link
+            href="/demo"
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all hover:scale-105"
+            style={{ background: "var(--color-primary)", color: "var(--color-ink)" }}
+          >
+            ▶ Demo
+          </Link>
         </div>
       </header>
 

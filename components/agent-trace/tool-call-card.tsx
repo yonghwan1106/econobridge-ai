@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import type { ReactNode } from "react";
+import { ToolResultRenderer } from "./tool-result-renderer";
 
 const TOOL_LABELS: Record<string, { label: string; icon: string; color: string }> = {
   search_worknet_jobs: { label: "고용24 채용검색", icon: "💼", color: "#00d4aa" },
@@ -23,8 +25,10 @@ export function ToolCallCard({
   result?: unknown;
   children?: ReactNode;
 }) {
+  const [expanded, setExpanded] = useState(false);
   const info = TOOL_LABELS[toolName] ?? { label: toolName, icon: "🔧", color: "#64748b" };
   const isDone = result != null;
+  const hasResult = result != null;
 
   return (
     <div
@@ -34,22 +38,48 @@ export function ToolCallCard({
         background: isDone ? "var(--color-bg-secondary)" : `${info.color}06`,
       }}
     >
-      <div className="flex items-center gap-2.5 px-3.5 py-2.5">
+      <button
+        onClick={() => hasResult && setExpanded(!expanded)}
+        className={`flex w-full items-center gap-2.5 px-3.5 py-2.5 ${
+          hasResult ? "cursor-pointer" : "cursor-default"
+        }`}
+      >
         <span className="text-base">{info.icon}</span>
-        <span className="flex-1 text-[13px] font-semibold text-[var(--color-text)]">
+        <span className="flex-1 text-left text-[13px] font-semibold text-[var(--color-text)]">
           {info.label}
         </span>
         {isDone ? (
-          <span className="flex items-center gap-1 rounded-full bg-green-50 px-2 py-0.5 text-[11px] font-semibold text-green-700 border border-green-200">
-            ✓ 완료
-          </span>
+          <>
+            <span className="flex items-center gap-1 rounded-full bg-green-50 px-2 py-0.5 text-[11px] font-semibold text-green-700 border border-green-200">
+              ✓ 완료
+            </span>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              className={`shrink-0 text-[var(--color-text-muted)] transition-transform duration-200 ${
+                expanded ? "rotate-180" : ""
+              }`}
+            >
+              <path
+                d="M3.5 5.25L7 8.75L10.5 5.25"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </>
         ) : (
           <span className="flex items-center gap-1 text-[12px] font-medium" style={{ color: info.color }}>
             <span className="h-1.5 w-1.5 rounded-full pulse-ring" style={{ background: info.color }} />
             분석 중
           </span>
         )}
-      </div>
+      </button>
+
+      {/* Args */}
       {args && Object.keys(args).length > 0 && (
         <div className="border-t border-[var(--color-border-light)] px-3.5 py-2 text-[12px] text-[var(--color-text-muted)]">
           {Object.entries(args)
@@ -62,7 +92,21 @@ export function ToolCallCard({
             ))}
         </div>
       )}
+
+      {/* Children (legacy) */}
       {children}
+
+      {/* Expandable result */}
+      <div
+        className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        style={{ maxHeight: expanded ? "800px" : "0px" }}
+      >
+        {hasResult && (
+          <div className="border-t border-[var(--color-border)] p-3">
+            <ToolResultRenderer toolName={toolName} output={result} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
