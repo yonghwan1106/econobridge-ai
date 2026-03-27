@@ -104,8 +104,8 @@ export function DagPanel({
         <div className="flex flex-wrap gap-3 border-t border-[var(--color-border)] px-4 py-2">
           {[
             { color: "#E2E8F0", label: "대기" },
-            { color: "#1B65A6", label: "실행 중" },
-            { color: "#16A34A", label: "완료" },
+            { color: "#00d4aa", label: "실행 중" },
+            { color: "#059669", label: "완료" },
             { color: "#F1F5F9", label: "건너뜀", muted: true },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-1.5">

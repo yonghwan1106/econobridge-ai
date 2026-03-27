@@ -33,7 +33,7 @@ export default function Home() {
         </button>
         <div className="flex items-center gap-2">
           <span className="hidden sm:inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(255,140,66,.12)", color: "#ff8c42", border: "1px solid rgba(255,140,66,.25)" }}>
-            🏆 제5회 공모전
+            🏆 제5회 고용노동 공공데이터·AI 활용 공모전 출품작
           </span>
           <span className="hidden sm:inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(0,212,170,.1)", color: "var(--color-primary)", border: "1px solid rgba(0,212,170,.2)" }}>
             🔗 7개 API
