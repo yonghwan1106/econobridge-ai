@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>EconoBridge AI — 사업계획서</title>
+<style>
+  @page {
+    size: A4;
+    margin: 22mm 20mm 24mm 20mm;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    font-family: "Malgun Gothic", "맑은 고딕", "Noto Sans KR", -apple-system, sans-serif;
+    font-size: 10.2pt;
+    line-height: 1.55;
+    color: #0a1628;
+    margin: 0; padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cover { page-break-after: always; }
+  .cover-band {
+    background: linear-gradient(135deg, #0a1628 0%, #173052 100%);
+    color: white;
+    padding: 16mm 12mm 14mm;
+    margin: 0;
+    border-radius: 4pt;
+    position: relative;
+  }
+  .cover-band .stamp {
+    position: absolute; top: 8mm; right: 12mm;
+    background: #ff8c42; color: #0a1628;
+    padding: 4pt 9pt; border-radius: 4pt;
+    font-size: 9pt; font-weight: 700;
+  }
+  .cover-band h1 { font-size: 24pt; font-weight: 800; margin: 0 0 6pt; line-height: 1.18; letter-spacing: -0.5pt; }
+  .cover-band h1 .accent { color: #00d4aa; }
+  .cover-band h2 { font-size: 14pt; font-weight: 500; margin: 0 0 18pt; opacity: 0.85; }
+  .cover-band .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6pt 14pt; font-size: 10.2pt; }
+  .cover-band .meta-grid .k { color: #00d4aa; font-weight: 700; }
+  .cover-band .meta-grid .v { color: white; }
+
+  .qr-box {
+    margin-top: 14pt;
+    display: inline-block;
+    background: white;
+    padding: 8pt;
+    border-radius: 6pt;
+    box-shadow: 0 4pt 14pt rgba(0,0,0,0.18);
+  }
+  .qr-box img { width: 28mm; height: 28mm; display: block; }
+  .qr-box .qr-cap { font-size: 8.5pt; color: #0a1628; text-align: center; margin-top: 4pt; font-weight: 700; }
+
+  .applicant-box {
+    margin: 18pt 0 0;
+    padding: 12pt 14pt;
+    background: rgba(255,255,255,0.08);
+    border: 1pt solid rgba(0,212,170,0.25);
+    border-radius: 6pt;
+  }
+  .applicant-box h3 { margin: 0 0 6pt; font-size: 10.5pt; color: #00d4aa; }
+  .applicant-box table { width: 100%; font-size: 10pt; border-collapse: collapse; }
+  .applicant-box td { padding: 2pt 0; vertical-align: top; }
+  .applicant-box td.k { color: #00d4aa; width: 24%; font-weight: 600; }
+
+  .field-tag {
+    margin-top: 14pt; display: inline-block;
+    background: #00d4aa; color: #0a1628;
+    padding: 5pt 12pt; border-radius: 4pt;
+    font-size: 10pt; font-weight: 800; letter-spacing: -0.2pt;
+  }
+
+  .cover-screenshot {
+    margin: 14pt 0 0; padding: 8pt; background: white; border-radius: 6pt;
+  }
+  .cover-screenshot img { width: 100%; display: block; border-radius: 4pt; }
+  .cover-screenshot .scap { font-size: 8.5pt; color: #5a6a7d; text-align: center; margin-top: 4pt; }
+
+  h2.section {
+    font-size: 13.5pt; font-weight: 800;
+    color: #0a1628;
+    border-left: 4pt solid #00d4aa;
+    padding: 4pt 0 4pt 9pt;
+    margin: 14pt 0 9pt;
+    page-break-after: avoid;
+  }
+  h3.subsection {
+    font-size: 11.5pt; font-weight: 700; color: #173052;
+    margin: 11pt 0 6pt; page-break-after: avoid;
+  }
+  h4.subsubsection {
+    font-size: 10.5pt; font-weight: 700; color: #0a1628;
+    margin: 9pt 0 4pt; page-break-after: avoid;
+  }
+  p { margin: 0 0 7pt; text-align: justify; }
+  ul, ol { margin: 4pt 0 7pt 14pt; padding: 0; }
+  ul li, ol li { margin: 1pt 0 1pt; }
+
+  table.data {
+    width: 100%; border-collapse: collapse; margin: 6pt 0 9pt;
+    font-size: 9.4pt; page-break-inside: avoid;
+  }
+  table.data th {
+    background: #0a1628; color: white;
+    padding: 5pt 6pt; text-align: left; font-weight: 700;
+    border: 0.5pt solid #0a1628;
+  }
+  table.data td {
+    padding: 4pt 6pt; border: 0.5pt solid #c2cdd9; vertical-align: top;
+  }
+  table.data tr:nth-child(even) td { background: #f4f7fb; }
+  table.data .center { text-align: center; }
+  table.data .num { text-align: right; }
+
+  .callout {
+    margin: 7pt 0; padding: 8pt 11pt;
+    background: #f4faf7; border-left: 3pt solid #00d4aa;
+    font-size: 9.8pt; border-radius: 0 4pt 4pt 0;
+  }
+  .callout strong { color: #006b54; }
+
+  .pre-box {
+    background: #0a1628; color: #cfe9e0;
+    font-family: "Consolas", "D2Coding", monospace;
+    font-size: 8.5pt; line-height: 1.45;
+    padding: 8pt 11pt; border-radius: 4pt;
+    margin: 6pt 0 9pt; white-space: pre;
+    page-break-inside: avoid;
+  }
+
+  .grade {
+    display: inline-block; padding: 1pt 5pt; border-radius: 3pt;
+    font-size: 8.8pt; font-weight: 800;
+  }
+  .ga { background: #d2efe5; color: #006b54; }
+  .gb { background: #fff5d6; color: #8a6d00; }
+  .gc { background: #ffe2d4; color: #a14000; }
+  .gd { background: #ffd5d5; color: #8a0000; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8pt; }
+  .grid-2 > div, .grid-3 > div {
+    border: 0.5pt solid #c2cdd9; padding: 8pt 10pt; border-radius: 4pt;
+    background: #fafcfe; font-size: 9.6pt;
+  }
+  .grid-2 .gtitle, .grid-3 .gtitle {
+    font-weight: 800; color: #0a1628;
+    border-bottom: 1pt solid #c2cdd9; padding-bottom: 3pt; margin-bottom: 4pt;
+    display: block;
+  }
+
+  .stamp-area {
+    margin-top: 16pt; text-align: right; font-size: 11pt;
+    page-break-inside: avoid;
+  }
+  .stamp-area .name { display: inline-block; vertical-align: middle; }
+  .stamp-area img { vertical-align: middle; width: 18mm; height: 18mm; margin-left: 4pt; }
+
+  .check-tick { color: #006b54; font-weight: 800; }
+  .ban { color: #b91c1c; font-weight: 800; }
+
+  .footer-note {
+    margin-top: 12pt; padding: 8pt 11pt;
+    background: #fff5d6; border: 0.5pt dashed #8a6d00;
+    font-size: 9.5pt; border-radius: 4pt;
+  }
+
+  /* page break helpers */
+  .pb-before { page-break-before: always; }
+  .pb-avoid { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============================================== -->
+<!-- 표지                                              -->
+<!-- ============================================== -->
+<section class="cover">
+  <div class="cover-band">
+    <div class="stamp">제5회 고용노동 공공데이터·AI 활용 공모전</div>
+    <div style="display:flex; gap:14pt; align-items:flex-start;">
+      <div style="flex:1;">
+        <h1><span class="accent">EconoBridge</span> AI</h1>
+        <h2>Claude Opus 4.7 기반 고용안전 자율 에이전트</h2>
+        <p style="font-size:10.5pt; opacity:0.9; line-height:1.55; max-width: 110mm;">
+          공공데이터 7종을 자율적으로 호출하여 채용정보 검색부터 기업 안전점수 산출까지<br>
+          한 번에 수행하는 AI 에이전트 웹 서비스
+        </p>
+
+        <div class="field-tag">응모 분야 ② 제품 및 서비스 개발 부문</div>
+
+        <div class="meta-grid" style="margin-top:14pt;">
+          <div><span class="k">서비스 URL</span></div>
+          <div class="v">https://econobridge-ai.vercel.app/</div>
+          <div><span class="k">시제품 상태</span></div>
+          <div class="v">Vercel 라이브 운영 중 (즉시 시연 가능)</div>
+          <div><span class="k">접수 마감</span></div>
+          <div class="v">2026년 5월 14일(목) 16:00</div>
+          <div><span class="k">분량</span></div>
+          <div class="v">10페이지 이내 (자유양식)</div>
+        </div>
+      </div>
+
+      <div class="qr-box">
+        <img src="qrcode_econobridge.png" alt="QR">
+        <div class="qr-cap">스캔하여<br>즉시 시연</div>
+      </div>
+    </div>
+
+    <div class="applicant-box">
+      <h3>▎응모자 정보 (단독 응모, 예비창업자)</h3>
+      <table>
+        <tr><td class="k">성 명</td><td class="v">박용환 (朴容煥)</td>
+            <td class="k">생년월일</td><td class="v">1970. 11. 06.</td></tr>
+        <tr><td class="k">소 속</td><td class="v">크리에이티브 넥서스 / 대표</td>
+            <td class="k">사업체</td><td class="v">경인블루저널 (개인사업자)</td></tr>
+        <tr><td class="k">연락처</td><td class="v">010-7939-3123</td>
+            <td class="k">이메일</td><td class="v">sanoramyun8@gmail.com</td></tr>
+        <tr><td class="k">주 소</td><td class="v" colspan="3">경기도 용인시 수지구 성복2로 126, LG빌리지3차 303동 801호 (우 16851)</td></tr>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- 1. 목적·기능·특징                                   -->
+<!-- ============================================== -->
+<h2 class="section">1) 제품 및 서비스의 목적·기능 및 특징</h2>
+
+<h3 class="subsection">1-1. 제품 개발 배경</h3>
+<p>우리나라는 OECD 국가 중 산업재해 사망률이 여전히 상위권에 머무르고 있으며, 2022년 중대재해처벌법 시행 이후에도 중대산업사고가 지속 발생하고 있다. 그러나 <strong>구직 단계에서 기업의 안전성을 사전에 확인할 수 있는 수단은 사실상 전무</strong>하다. 구직자는 급여·복리후생 정보는 쉽게 비교하지만, 해당 기업의 산재 이력·중대재해 발생 여부·임금체불 명단 등재 사실 등은 알기 어렵다.</p>
+
+<p>기업 안전 관련 정보는 이미 <strong>공공데이터로 존재한다</strong>. 근로복지공단의 산재처리현황, 고용노동부의 중대산업사고 발생현황과 임금체불 명단, 한국산업안전보건공단의 안전보건법령 등이 그것이다. 그러나 이들 데이터는 각기 다른 기관의 서로 다른 시스템에 분산되어 있어, 일반 구직자가 통합적으로 조회·비교하는 것은 현실적으로 불가능하다. <strong>데이터는 있으나 활용되지 못하는 "정보 비대칭" 상태</strong>다.</p>
+
+<h3 class="subsection">1-2. 핵심 기능 — 자연어 한 문장으로 7개 도구 자율 호출</h3>
+<p>EconoBridge AI는 자연어 한 문장의 입력만으로 AI 에이전트가 7개 공공데이터 API를 자율적으로 호출하여 다음을 자동 수행한다.</p>
+<ol>
+  <li><strong>채용정보 검색</strong> — 워크넷 API로 조건에 맞는 채용공고 탐색</li>
+  <li><strong>기업 산재이력 조회</strong> — 근로복지공단·고용노동부 데이터로 산업재해 이력 확인</li>
+  <li><strong>안전점수 산출</strong> — 산재·중대재해·사망사고·임금체불 이력을 종합한 100점 만점 산출</li>
+  <li><strong>위험기업 경고</strong> — 안전점수가 낮은 기업은 명확히 경고 표시</li>
+  <li><strong>안전한 일자리 추천</strong> — 안전점수 기준 정렬된 맞춤 채용 결과 제공</li>
+  <li><strong>훈련과정 연계</strong> — HRD-Net 훈련과정 자동 추천</li>
+  <li><strong>자기소개서 생성</strong> — NCS 기반 맞춤 자기소개서 초안 자동 작성</li>
+</ol>
+
+<h3 class="subsection">1-3. 핵심 기술 — Claude Opus 4.7 ReAct 자율 에이전트</h3>
+<p>EconoBridge AI는 <strong>Anthropic Claude Opus 4.7</strong>(2026년 출시)을 메인 추론 엔진으로 채택하고, <strong>Vercel AI SDK 6의 <code>ToolLoopAgent</code></strong> 위에서 <strong>ReAct(Reasoning + Acting) 패턴</strong>으로 동작한다. 사용자가 한 번 질문하면, 에이전트가 스스로 판단하여 <strong>최대 10단계까지 도구를 자율적으로 연쇄 호출</strong>한다. 단순 검색·요약을 넘어 "의사결정형 에이전트"로 작동하는 것이 본 서비스의 기술적 특징이다.</p>
+
+<h3 class="subsection">1-4. 안전점수 알고리즘 (핵심 차별 기능)</h3>
+<p>근로복지공단 산재처리현황과 고용노동부 중대산업사고 데이터를 교차 분석하여 <strong>100점 만점 안전점수</strong>를 산출한다. 이 알고리즘은 실제 코드(<code>lib/tools/safety-check.ts</code>)로 구현되어 작동한다.</p>
+
+<div class="grid-2">
+  <div>
+    <span class="gtitle">▎안전점수 산출 공식</span>
+    안전점수 = 100점 (기본)<br>
+    &nbsp;&nbsp;− 산업재해 건당&nbsp;····· −5점<br>
+    &nbsp;&nbsp;− 중대재해 건당&nbsp;····· −15점<br>
+    &nbsp;&nbsp;− 사망사고 건당&nbsp;····· −25점<br>
+    &nbsp;&nbsp;− 임금체불 이력&nbsp;····· −10점<br>
+    <em>(최저 0점, 최고 100점)</em>
+  </div>
+  <div>
+    <span class="gtitle">▎안전등급 체계</span>
+    <span class="grade ga">A 90↑</span> 안전 (녹색)<br>
+    <span class="grade gb">B 70~89</span> 보통 (황색)<br>
+    <span class="grade gc">C 50~69</span> 주의 (주황)<br>
+    <span class="grade gd">D &lt;50</span> 위험 (적색)<br>
+    <em style="font-size:9pt;">D등급은 경고 표시 + 위험 사유 명시</em>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 2. 데이터 활용                                     -->
+<!-- ============================================== -->
+<h2 class="section">2) 제품 및 서비스의 고용노동 데이터 활용 방안 (활용성)</h2>
+
+<h3 class="subsection">2-1. 활용 공공데이터 — 7개 도구 / 6개 기관</h3>
+<table class="data">
+  <thead><tr><th class="center" style="width:6%;">#</th><th style="width:24%;">도구명</th><th style="width:30%;">데이터 출처 (제공기관)</th><th>데이터명</th></tr></thead>
+  <tbody>
+    <tr><td class="center">1</td><td><code>search_worknet_jobs</code></td><td>한국고용정보원</td><td>워크넷 채용정보 OpenAPI</td></tr>
+    <tr><td class="center">2</td><td><code>search_disability_jobs</code></td><td>한국장애인고용공단 (KEAD)</td><td>장애인 채용정보</td></tr>
+    <tr><td class="center">3</td><td><code>search_training_courses</code></td><td>한국산업인력공단 (HRD-K)</td><td>HRD-Net 훈련과정 정보</td></tr>
+    <tr><td class="center">4</td><td><code>check_company_safety</code></td><td>근로복지공단 + 고용노동부</td><td>산재처리현황 + 중대산업사고 발생현황</td></tr>
+    <tr><td class="center">5</td><td><code>check_wage_violations</code></td><td>고용노동부</td><td>체불사업주 명단 공개</td></tr>
+    <tr><td class="center">6</td><td><code>search_safety_laws</code></td><td>한국산업안전보건공단 (KOSHA)</td><td>안전보건법령정보</td></tr>
+    <tr><td class="center">7</td><td><code>generate_cover_letter</code></td><td>자체 LLM 생성</td><td>NCS 직무능력표준 (한국산업인력공단) 기반</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">2-2. 데이터 활용성 — "교차검증의 자동화"</h3>
+<p>기존 채용 플랫폼은 단일 데이터셋(채용공고)만 활용하지만, EconoBridge AI는 <strong>채용 + 산재 + 임금체불 + 훈련</strong>을 자율적으로 교차 호출한다. AI 에이전트가 채용공고에서 기업명을 추출하면, 동일 기업명을 키로 산재이력·임금체불 명단을 자동 조회하여 단일 응답에 종합한다.</p>
+<div class="callout">
+  <strong>핵심:</strong> 사람이 5~6개 사이트를 순회하며 일일이 비교하던 작업을, AI 에이전트가 자율적으로 단일 응답으로 대체한다. 이는 본 공모전에서 평가하는 "공공데이터 활용성" 의 본질에 부합한다.
+</div>
+
+<h3 class="subsection">2-3. 데이터 획득의 지속성 및 확장성</h3>
+<ul>
+  <li><strong>지속성</strong> — 「공공데이터의 제공 및 이용 활성화에 관한 법률」에 따른 정부 의무 공개 데이터로 중단 위험이 매우 낮다.</li>
+  <li><strong>활용범위</strong> — 산재예방안전보건공단·국민연금공단·고용보험공단 데이터와 결합 시 <strong>취업–훈련–사회보장–안전관리의 통합 분석</strong> 으로 확장 가능하다.</li>
+  <li><strong>가공 가능성</strong> — AI 에이전트의 도구 인터페이스는 <strong>Zod 스키마 기반의 JSON 표준화</strong> 를 채택하여, 신규 데이터 API 추가 시 도구 1개만 신설하면 에이전트가 자동으로 활용을 학습한다.</li>
+</ul>
+
+<h3 class="subsection">2-4. 추가 연계 가능 데이터 (확장 로드맵)</h3>
+<div class="grid-3">
+  <div><span class="gtitle">안전보건공단</span>위험성평가 인정사업장 정보 / 안전보건교육 이수 현황</div>
+  <div><span class="gtitle">국민연금공단</span>사업장 가입 현황으로 실재 운영 검증</div>
+  <div><span class="gtitle">사회적기업진흥원·잡월드</span>사회적기업 인증 / 직업체험·진로상담 정보</div>
+</div>
+
+<!-- ============================================== -->
+<!-- 3. AI 활용                                        -->
+<!-- ============================================== -->
+<h2 class="section">3) 제품 및 서비스의 AI 활용 방안 (활용성)</h2>
+
+<h3 class="subsection">3-1. 활용 AI 기술 스택</h3>
+<table class="data">
+  <thead><tr><th>구분</th><th>활용 AI 기술</th><th>모델 / 플랫폼</th><th>역할</th></tr></thead>
+  <tbody>
+    <tr><td>메인 추론</td><td>생성형 LLM</td><td><strong>Anthropic Claude Opus 4.7</strong> (<code>claude-opus-4-7</code>)</td><td>자연어 의도 분석, 도구 선택, 결과 종합</td></tr>
+    <tr><td>자기소개서 생성</td><td>생성형 LLM</td><td>Anthropic Claude Haiku 4.5 (<code>claude-haiku-4-5</code>)</td><td>NCS 기반 자소서 초안 (속도·비용 최적)</td></tr>
+    <tr><td>에이전트 프레임워크</td><td>ToolLoopAgent</td><td>Vercel AI SDK 6.0.174</td><td>ReAct 패턴 자율 도구 호출 (최대 10단계)</td></tr>
+    <tr><td>스키마 검증</td><td>Zod</td><td>zod 3.25</td><td>도구 입출력 타입 안전성 보장</td></tr>
+    <tr><td>UI 스트리밍</td><td>UIMessageStream</td><td>Vercel AI SDK 6</td><td>실시간 단계별 스트리밍 응답</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">3-2. AI 자율성의 핵심 — ReAct 패턴 다단계 자율 워크플로</h3>
+<p>기존 챗봇이 "단일 쿼리 → 단일 응답"이라면, EconoBridge AI는 <strong>"단일 질의 → AI의 자율적 사고·도구 호출·결과 종합"</strong> 의 다단계 루프로 동작한다.</p>
+<div class="pre-box">[사용자] "경기도에서 IT 웹개발자 채용 찾아줘"
+   ↓
+Step 1: 의도 분석 (Claude Opus 4.7)
+        → 추출: 지역=경기, 직종=IT/웹개발, 장애여부=무
+   ↓
+Step 2: search_worknet_jobs 호출 → 채용공고 5건
+   ↓
+Step 3~7: check_company_safety × 5회 (각 기업 안전점수 자동 조회)
+   ↓
+Step 8: check_wage_violations (임금체불 교차 확인)
+   ↓
+Step 9: search_training_courses (역량갭 훈련 추천)
+   ↓
+Step 10: 결과 종합 (안전점수순 정렬 + 위험기업 경고)</div>
+<p>이 모든 단계는 <strong>사용자의 추가 입력 없이 AI가 자율적으로 결정</strong>한다. Claude Opus 4.7의 향상된 도구 사용(Tool Use) 능력은 이러한 다단계 자율 워크플로의 안정성을 확보하는 핵심 기반이다.</p>
+
+<h3 class="subsection">3-3. AI 기술의 지속성 및 활용범위</h3>
+<ul>
+  <li><strong>지속성</strong> — Anthropic Claude API는 상업적 SLA를 제공하는 공식 API로 안정적 운영이 보장되며, Vercel AI SDK는 오픈소스로 벤더 락인 위험이 낮다.</li>
+  <li><strong>활용범위</strong> — 본 ReAct 에이전트 아키텍처는 <strong>고용·복지·창업 등 정부 행정 영역의 다양한 자율 에이전트 서비스로 확장 가능</strong>하다. 예: 창업지원금 자동 매칭 에이전트, 복지급여 통합 신청 에이전트.</li>
+  <li><strong>모델 업그레이드 용이성</strong> — 모델 ID 1줄 교체만으로 신규 모델 전환. 본 사업계획서 작성 시점에 최신 출시된 <strong>Claude Opus 4.7</strong> 로 업그레이드 완료 상태다.</li>
+</ul>
+
+<h3 class="subsection">3-4. AI 윤리 및 안전성</h3>
+<ul>
+  <li><strong>데이터 출처 명시</strong> — 모든 응답에 데이터 출처(기관명)를 명시하여 정보 책임성 확보</li>
+  <li><strong>자동 fallback</strong> — API 장애 시 캐싱·템플릿으로 fallback하여 가용성 보장</li>
+  <li><strong>검증 가능성 (Agent Trace)</strong> — AI의 모든 도구 호출 단계가 UI에서 시각화되어 추론 과정을 검증 가능</li>
+</ul>
+
+<!-- ============================================== -->
+<!-- 4. 창업 계획                                      -->
+<!-- ============================================== -->
+<h2 class="section">4) 제품 및 서비스를 활용한 창업(사업) 계획 (실용성)</h2>
+
+<h3 class="subsection">4-1. 응모자 정보 및 추진 의지</h3>
+<p>본 서비스의 응모자 박용환은 <strong>공모전 전문 기획자(월 10건 이상 참여)</strong> 이자 <strong>커널 아카데미 AI 부트캠프 15기</strong> 수료자로, AI 기반 공익 서비스 기획·구축에 집중하고 있다. 본 EconoBridge AI는 <strong>개인사업자 경인블루저널(2026년 1월 개업, 정보통신업)</strong> 의 미디어·데이터 사업 노선과 연계하여 사업화를 추진한다.</p>
+
+<table class="data">
+  <thead><tr><th>항목</th><th>내용</th></tr></thead>
+  <tbody>
+    <tr><td>응모자</td><td>박용환 (1970년생, 단독 응모, 예비창업자)</td></tr>
+    <tr><td>소속</td><td>크리에이티브 넥서스 / 대표</td></tr>
+    <tr><td>사업체</td><td>경인블루저널 (개인사업자 849-01-03618, 정보통신업)</td></tr>
+    <tr><td>경력</td><td>한국연구재단 K-문샷 우수상, 조경 비전 2050 통과 외 다수 공모전 수상</td></tr>
+    <tr><td>역량</td><td>아이디어 기획, AI 활용 제안서, 프로토타입 기획·구현</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">4-2. 예비창업자 사업화 계획 (3단계)</h3>
+<table class="data">
+  <thead><tr><th style="width:18%;">단계</th><th style="width:22%;">기간</th><th>주요 활동</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1단계</strong></td>
+      <td>2026.05~09<br>(공모전·검증)</td>
+      <td>본 공모전 수상으로 사회적 인지도 확보 → 산업안전상생재단·근로복지공단을 PoC 파트너로 확보 → 안전점수 D등급 기업 컨설팅 연계 가설 검증</td>
+    </tr>
+    <tr>
+      <td><strong>2단계</strong></td>
+      <td>2026.10~2027.06<br>(정식 서비스화)</td>
+      <td>경인블루저널 사업영역 확장 또는 별도 법인 설립 검토 → 공공데이터 OpenAPI 정식 키 발급·트래픽 인프라 확보 → 사회적기업·예비사회적기업 인증 추진</td>
+    </tr>
+    <tr>
+      <td><strong>3단계</strong></td>
+      <td>2027.하반기~<br>(SaaS 모델)</td>
+      <td>기업용 안전관리 대시보드 SaaS (B2B) → 지자체용 지역 안전점수 모니터링 (B2G) → 구직자용 무료 + 기업용 유료의 양면 시장 구조 확립</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">4-3. 추진 의지 — "공모전 → 사회적기업 → SaaS"의 도약</h3>
+<p>본 응모자는 이미 <strong>2026년 사회적기업 창업지원사업(초기창업형)</strong> 과 각종 공공 데이터·AI 공모전에 병행 참여 중이며, EconoBridge AI는 그 핵심 기둥 사업으로 자리매김할 예정이다. 응모자는 단순 시제품을 넘어 <strong>즉시 운영 가능한 라이브 서비스</strong>(<a href="https://econobridge-ai.vercel.app/">https://econobridge-ai.vercel.app/</a>)를 이미 배포 완료하였으며, 이는 공모전 이후 사업 추진의 <strong>기술적·운영적 즉시성</strong>을 입증한다.</p>
+
+<!-- ============================================== -->
+<!-- 5. 차별성                                         -->
+<!-- ============================================== -->
+<h2 class="section">5) 제품 및 서비스의 차별성 (차별성)</h2>
+
+<h3 class="subsection">5-1. 기존 서비스 비교표</h3>
+<table class="data">
+  <thead><tr>
+    <th style="width:18%;">구분</th>
+    <th class="center" style="width:13%;">워크넷</th>
+    <th class="center" style="width:16%;">사람인 / 잡코리아</th>
+    <th class="center" style="width:13%;">KOSHA-Net</th>
+    <th class="center"><strong>EconoBridge AI</strong></th>
+  </tr></thead>
+  <tbody>
+    <tr><td>운영 주체</td><td class="center">고용노동부</td><td class="center">민간</td><td class="center">안전보건공단</td><td class="center"><strong>개인 (예비창업자)</strong></td></tr>
+    <tr><td>채용정보 검색</td><td class="center">○</td><td class="center">○</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (워크넷+KEAD)</strong></td></tr>
+    <tr><td>기업 안전점수</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (자체 산출, 100점)</strong></td></tr>
+    <tr><td>산재 이력 조회</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center">△ (제한적)</td><td class="center" style="color:#006b54;"><strong>○ (자동 통합)</strong></td></tr>
+    <tr><td>임금체불 교차</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (자동 통합)</strong></td></tr>
+    <tr><td>안전보건법령 안내</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center">○</td><td class="center" style="color:#006b54;"><strong>○ (AI 자동 인용)</strong></td></tr>
+    <tr><td>훈련과정 추천</td><td class="center">△</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (HRD-Net)</strong></td></tr>
+    <tr><td>자기소개서 생성</td><td class="center" style="color:#b91c1c;">✗</td><td class="center">△ (유료)</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (NCS 무료)</strong></td></tr>
+    <tr><td>AI 자율 에이전트</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ Claude Opus 4.7</strong></td></tr>
+    <tr><td>다단계 자율 호출</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#b91c1c;">✗</td><td class="center" style="color:#006b54;"><strong>○ (최대 10단계)</strong></td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">5-2. 핵심 차별점 3가지</h3>
+<div class="grid-3">
+  <div>
+    <span class="gtitle">① 데이터 통합의 자동화</span>
+    "사람이 7개 사이트 순회"를 "AI 1번 질의"로 압축. 채용·산재·체불·훈련을 단일 응답으로 종합.
+  </div>
+  <div>
+    <span class="gtitle">② 안전점수 자동 산출</span>
+    정성적 정보를 100점·A~D 등급으로 정량화. 구직자가 직관적으로 의사결정할 수 있는 정보 가공.
+  </div>
+  <div>
+    <span class="gtitle">③ AI 자율성</span>
+    단순 검색 챗봇 ✗. Claude Opus 4.7 + ReAct 결합으로 최대 10단계 자율 도구 호출 수행.
+  </div>
+</div>
+
+<h3 class="subsection">5-3. 본 공모전 양대 평가축에서의 우위</h3>
+<ul>
+  <li><strong>공공데이터 활용성</strong> — 6개 기관 7개 데이터를 단일 서비스에서 통합 활용 (시중 최대 수준)</li>
+  <li><strong>AI 기술 활용성</strong> — 단순 STT·생성형 텍스트가 아닌 <strong>자율 에이전트 아키텍처</strong> 채택 (시중 차별 수준)</li>
+</ul>
+
+<!-- ============================================== -->
+<!-- 6. 사업화                                         -->
+<!-- ============================================== -->
+<h2 class="section">6) 제품 및 서비스의 사업화 계획 (효과성)</h2>
+
+<h3 class="subsection">6-1. 단계별 사업화 로드맵</h3>
+<div class="pre-box">2026.05  공모전 수상 (목표 — 최우수 또는 우수)
+       ↓
+2026.06~09  재단 PoC 협업 (산업안전상생재단·근로복지공단·KEAD)
+       ↓
+2026.10  정식 서비스 런칭 (커스텀 도메인, 정식 OpenAPI 키)
+       ↓
+2027 1Q  사회적기업·예비사회적기업 인증 추진
+       ↓
+2027 2Q  B2B SaaS 베타 (안전관리 대시보드)
+       ↓
+2027 3Q+  지자체 B2G 확장 (지역 안전점수 모니터링)</div>
+
+<h3 class="subsection">6-2. 홍보·마케팅 전략</h3>
+<table class="data">
+  <thead><tr><th style="width:18%;">채널</th><th>전략</th></tr></thead>
+  <tbody>
+    <tr><td><strong>B2C (구직자)</strong></td><td>경인블루저널 미디어 채널 활용 / 청년·장애인·중장년 커뮤니티 협업 / 공공기관 SNS 협업</td></tr>
+    <tr><td><strong>B2G (공공기관)</strong></td><td>산업안전상생재단·근로복지공단·KEAD와 PoC 파트너십 / 안전점수 D등급 기업 → 재단 컨설팅 연계 모델</td></tr>
+    <tr><td><strong>B2B (기업)</strong></td><td>본인의 기업 안전점수 모니터링 대시보드 / 안전점수 개선 컨설팅 SaaS</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">6-3. 수익구조</h3>
+<table class="data">
+  <thead><tr><th style="width:24%;">수익원</th><th style="width:28%;">모델</th><th style="width:18%;">단가 (예시)</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td>구직자 무료 서비스</td><td>광고/제휴 모델 (공공기관 우선)</td><td class="num">—</td><td>진입장벽 0, 트래픽 확보</td></tr>
+    <tr><td>재단·공공기관 PoC 위탁</td><td>사업비 수령</td><td class="num">연 1~3천만원</td><td>재단 컨설팅 사업 연계</td></tr>
+    <tr><td>기업용 안전관리 SaaS</td><td>월 정액제</td><td class="num">월 9만~29만원</td><td>자사 안전점수 모니터링·개선안</td></tr>
+    <tr><td>컨설팅 매칭 수수료</td><td>안전컨설팅 매칭</td><td class="num">건당 5~15%</td><td>D등급 기업 → 재단/민간 컨설팅 연결</td></tr>
+    <tr><td>데이터 리포트 판매</td><td>산업·지역 안전 리포트</td><td class="num">1건 50~200만원</td><td>경인블루저널 미디어 자산화</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">6-4. 기대 효과 및 사회적 가치</h3>
+<table class="data">
+  <thead><tr><th style="width:20%;">측면</th><th>기대 효과</th></tr></thead>
+  <tbody>
+    <tr><td><strong>구직자</strong></td><td>위험 일자리 사전 회피, 정보 비대칭 해소, 취약계층(장애·청년·중장년) 맞춤 지원</td></tr>
+    <tr><td><strong>기업</strong></td><td>안전점수 가시화로 자발적 안전개선 동기 부여 ("안전한 기업이 좋은 인재를 얻는다")</td></tr>
+    <tr><td><strong>재단·공공기관</strong></td><td>안전점수 D등급 기업을 컨설팅·교육 사업으로 연계하는 새로운 수요 발굴 채널</td></tr>
+    <tr><td><strong>사회</strong></td><td>중대재해 예방, 공공데이터 활용 우수사례, AI의 공익적 활용 모범사례</td></tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">6-5. 실현가능성의 결정적 증거 — "이미 작동하는 서비스"</h3>
+<p>본 사업계획서의 가장 큰 강점은 <strong>아이디어 단계가 아닌 실제 구현·배포 완료된 라이브 서비스</strong>라는 점이다.</p>
+<ul>
+  <li><span class="check-tick">✓</span> <strong>기술 구현 완료</strong> — Next.js 16 + React 19 + Vercel AI SDK 6 + Claude Opus 4.7</li>
+  <li><span class="check-tick">✓</span> <strong>상용 배포 완료</strong> — <a href="https://econobridge-ai.vercel.app/">https://econobridge-ai.vercel.app/</a> (즉시 접속·시연 가능)</li>
+  <li><span class="check-tick">✓</span> <strong>7개 도구 작동</strong> — 채용·안전·임금·법령·훈련·자소서 모두 실 응답</li>
+  <li><span class="check-tick">✓</span> <strong>확장 용이</strong> — 신규 데이터 API 추가 시 도구 1개만 추가하면 에이전트가 자동 활용</li>
+</ul>
+
+<div class="callout">
+  <strong>응모 의지:</strong> 본 응모자는 본 공모전 수상을 발판으로 <strong>2027년 SaaS 정식 출시</strong> 까지의 사업화 로드맵을 단계적으로 실행할 추진 의지를 갖고 있으며, 그 출발점에 본 「제5회 고용노동 공공데이터·AI 활용 공모전」 수상이 자리하기를 기대한다.
+</div>
+
+<div class="footer-note">
+  <strong>※ 시제품 실행 확인 자료 첨부:</strong> 본 사업계획서 표지 우측의 QR 코드 또는 URL <a href="https://econobridge-ai.vercel.app/">https://econobridge-ai.vercel.app/</a> 을 통해 EconoBridge AI 라이브 서비스에 즉시 접속·시연 가능하며, 다음 페이지의 화면 캡처는 라이브 서비스의 실제 화면임을 명시함.
+</div>
+
+<div class="stamp-area">
+  2026년 5월 &nbsp; &nbsp; 응모자 &nbsp; <span class="name">박 용 환</span> (인)
+</div>
+
+<!-- ============================================== -->
+<!-- 부록: 시제품 실행 확인 자료                         -->
+<!-- ============================================== -->
+<h2 class="section pb-before">부록 — 시제품 실행 확인 자료 (라이브 화면)</h2>
+<p>아래는 <a href="https://econobridge-ai.vercel.app/">https://econobridge-ai.vercel.app/</a> 에 실제 배포·운영 중인 EconoBridge AI의 화면 캡처이다. 표지 QR 코드 스캔 또는 URL 직접 접속을 통해 동일 화면을 즉시 확인할 수 있다.</p>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:10pt; margin-top:6pt;">
+  <div>
+    <img src="screenshots/01_main.png" alt="메인 화면" style="width:100%; border:0.5pt solid #c2cdd9; border-radius:4pt;">
+    <p style="font-size:9pt; color:#5a6a7d; text-align:center; margin:4pt 0 0;">▲ 화면 1 — 메인 챗 화면<br>(공모전 출품작 배지 · 7개 사전 정의 데모 · 자연어 입력)</p>
+  </div>
+  <div>
+    <img src="screenshots/02_demo.png" alt="데모 페이지" style="width:100%; border:0.5pt solid #c2cdd9; border-radius:4pt;">
+    <p style="font-size:9pt; color:#5a6a7d; text-align:center; margin:4pt 0 0;">▲ 화면 2 — /demo 페이지<br>(사전 정의된 시연 시나리오)</p>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:10pt;">
+  <strong>즉시 시연 안내:</strong> 표지 우측 QR 코드를 모바일 카메라로 스캔하거나 URL <code>https://econobridge-ai.vercel.app/</code> 에 접속하시면, 본 화면 캡처와 동일한 라이브 서비스에 즉시 접속하여 자연어 질의 → 7개 도구 자율 호출 → 안전점수 산출의 전 과정을 직접 시연해 보실 수 있습니다.
+</div>
+
+</body>
+</html>

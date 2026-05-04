@@ -38,6 +38,9 @@ export default function Home() {
           <span className="hidden sm:inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(0,212,170,.1)", color: "var(--color-primary)", border: "1px solid rgba(0,212,170,.2)" }}>
             🔗 7개 API
           </span>
+          <span className="hidden md:inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold" style={{ background: "rgba(167,139,250,.12)", color: "#a78bfa", border: "1px solid rgba(167,139,250,.28)" }}>
+            ⚡ Powered by Claude Opus 4.7
+          </span>
           <Link
             href="/demo"
             className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all hover:scale-105"
