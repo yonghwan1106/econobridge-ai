@@ -15,9 +15,4 @@ export const econoBridgeAgent = new ToolLoopAgent({
   },
   tools: allTools,
   stopWhen: stepCountIs(10),
-  providerOptions: {
-    anthropic: {
-      thinking: { type: "enabled", budgetTokens: 4000 },
-    },
-  },
 });
